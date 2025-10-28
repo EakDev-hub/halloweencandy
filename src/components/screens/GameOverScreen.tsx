@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveGameSession, isSupabaseConfigured } from '../../lib/supabaseClient';
 import Leaderboard from '../game/Leaderboard';
@@ -12,11 +12,17 @@ export default function GameOverScreen() {
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const hasSaved = useRef(false);
 
   const maxScore = GAME_CONFIG.TOTAL_ROUNDS * GAME_CONFIG.POINTS_PER_CORRECT;
   const percentage = Math.round((finalScore / maxScore) * 100);
 
   useEffect(() => {
+    // Prevent duplicate saves
+    if (hasSaved.current) {
+      return;
+    }
+
     // Save game session to database
     const saveSession = async () => {
       if (!isSupabaseConfigured()) {
@@ -24,7 +30,9 @@ export default function GameOverScreen() {
         return;
       }
 
+      hasSaved.current = true;
       setIsSaving(true);
+      
       const result = await saveGameSession(
         nickname,
         finalScore,
@@ -36,6 +44,7 @@ export default function GameOverScreen() {
         setShowLeaderboard(true);
       } else {
         setSaveError(true);
+        hasSaved.current = false; // Allow retry on error
       }
       setIsSaving(false);
     };
