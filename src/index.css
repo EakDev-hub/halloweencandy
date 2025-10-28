@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&display=swap');
+@import "tailwindcss";
+
+body {
+  background: linear-gradient(135deg, #2D1B3D 0%, #1A1A1A 100%);
+  min-height: 100vh;
+  color: #F5F5F5;
+}
+
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  background-color: #FF6B1A;
+  color: white;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  transform: scale(1);
+}
+
+.btn-primary:hover {
+  background-color: #FFA500;
+  transform: scale(1.05);
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+}
+
+.btn-secondary {
+  padding: 0.75rem 1.5rem;
+  background-color: #6B2D5C;
+  color: white;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  transform: scale(1);
+}
+
+.btn-secondary:hover {
+  background-color: #2D1B3D;
+  transform: scale(1.05);
+}
+
+.btn-secondary:active {
+  transform: scale(0.95);
+}
+
+.card {
+  background-color: rgba(45, 27, 61, 0.8);
+  backdrop-filter: blur(4px);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 2px solid rgba(255, 107, 26, 0.3);
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: rgba(26, 26, 26, 0.5);
+  border: 2px solid rgba(255, 107, 26, 0.5);
+  border-radius: 0.5rem;
+  color: white;
+  transition: border-color 0.2s;
+}
+
+.input-field::placeholder {
+  color: rgb(156, 163, 175);
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #FF6B1A;
+}
+
+.candy {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.candy:hover {
+  transform: scale(1.1);
+}
