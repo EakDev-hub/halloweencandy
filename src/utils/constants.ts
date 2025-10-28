@@ -1,5 +1,9 @@
 import type { CandyType } from '../types/game.types';
 
+/**
+ * @deprecated Config now loaded from game-config.json (v2.0)
+ * Kept for backward compatibility
+ */
 export const GAME_CONFIG = {
   TOTAL_ROUNDS: 20,
   TIME_PER_ROUND: 40, // seconds
@@ -11,6 +15,21 @@ export const GAME_CONFIG = {
   MIN_CANDY_TYPES: 2,
   MAX_CANDY_TYPES: 3,
 };
+
+/**
+ * V2.0 Scoring constants for request-based allocation
+ */
+export const SCORING = {
+  REGULAR_CHILD_PER_CANDY: 1,
+  SPECIAL_CHILD_PER_CANDY: 2,
+  INCORRECT_ALLOCATION: 0.5,
+  NO_ALLOCATION: 0,
+};
+
+/**
+ * Visual indicator for special children
+ */
+export const SPECIAL_CHILD_INDICATOR = '👑';
 
 export const CANDY_TEMPLATES: Omit<CandyType, 'quantity'>[] = [
   {

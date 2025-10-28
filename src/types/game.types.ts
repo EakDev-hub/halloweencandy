@@ -5,13 +5,62 @@ export interface CandyType {
   emoji: string;
 }
 
+// New v2.0 interfaces for request-based allocation
+export interface CandyRequest {
+  candyName: string;
+  quantity: number;
+}
+
+export interface Child {
+  id: string;
+  isSpecial: boolean;
+  requests: CandyRequest[];
+  emoji: string;
+}
+
+export interface AllocatedCandy {
+  candyName: string;
+  quantity: number;
+}
+
+export interface ChildAllocation {
+  childId: string;
+  allocatedCandies: AllocatedCandy[];
+}
+
+export interface ChildResult {
+  childId: string;
+  isCorrect: boolean;
+  isPartial: boolean;
+  pointsEarned: number;
+}
+
+export interface RoundResult {
+  roundNumber: number;
+  pointsEarned: number;
+  childResults: ChildResult[];
+}
+
+export interface GameConfig {
+  gameSettings: {
+    totalRounds: number;
+    timeLimitPerRound: number;
+    version: string;
+  };
+  rounds: GameRound[];
+}
+
+// Updated GameRound for v2.0
 export interface GameRound {
   roundNumber: number;
-  candies: CandyType[];
-  childrenCount: number;
+  initialCandies: CandyType[];
+  children: Child[];
   timeLimit: number;
 }
 
+/**
+ * @deprecated Use ChildAllocation instead (v2.0)
+ */
 export interface AllocationInput {
   candyName: string;
   perChild: number;
@@ -25,7 +74,8 @@ export interface GameState {
   playerNickname: string;
   timeRemaining: number;
   isGameOver: boolean;
-  currentAllocation: AllocationInput[];
+  currentAllocation: ChildAllocation[];
+  roundResults: RoundResult[];
 }
 
 export interface GameSession {

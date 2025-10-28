@@ -1,0 +1,221 @@
+import type { 
+  Child, 
+  AllocatedCandy, 
+  ChildResult, 
+  RoundResult,
+  ChildAllocation,
+  CandyRequest
+} from '../types/game.types';
+
+/**
+ * Points awarded for correct allocation to regular children (per candy)
+ */
+export const POINTS_REGULAR_CHILD = 1;
+
+/**
+ * Points awarded for correct allocation to special children (per candy)
+ */
+export const POINTS_SPECIAL_CHILD = 2;
+
+/**
+ * Points awarded for incorrect allocation (wrong type or amount)
+ */
+export const POINTS_INCORRECT = 0.5;
+
+/**
+ * Points awarded for no allocation
+ */
+export const POINTS_NONE = 0;
+
+/**
+ * Calculate points earned for allocating candies to a child
+ * 
+ * Scoring rules:
+ * - Exact match to requests: 1 point per candy (regular) or 2 points per candy (special)
+ * - Partial/incorrect: 0.5 points
+ * - No allocation: 0 points
+ * 
+ * @param child - The child receiving candy
+ * @param allocation - What was allocated to this child
+ * @returns Score breakdown with points earned
+ */
+export function calculateChildScore(
+  child: Child,
+  allocation: AllocatedCandy[]
+): ChildResult {
+  const pointsPerCorrectCandy = child.isSpecial 
+    ? POINTS_SPECIAL_CHILD 
+    : POINTS_REGULAR_CHILD;
+  
+  // Check if allocation exactly matches child's requests
+  const isExactMatch = isAllocationExactMatch(child.requests, allocation);
+  
+  if (isExactMatch) {
+    // Full match: earn points for each candy
+    const totalCandies = child.requests.reduce(
+      (sum, req) => sum + req.quantity, 
+      0
+    );
+    return {
+      childId: child.id,
+      isCorrect: true,
+      isPartial: false,
+      pointsEarned: totalCandies * pointsPerCorrectCandy
+    };
+  }
+  
+  // Check if player gave something (even if wrong)
+  const hasAllocation = allocation.length > 0 && 
+    allocation.some(a => a.quantity > 0);
+  
+  if (hasAllocation) {
+    // Incorrect allocation: partial credit
+    return {
+      childId: child.id,
+      isCorrect: false,
+      isPartial: true,
+      pointsEarned: POINTS_INCORRECT
+    };
+  }
+  
+  // No allocation: zero points
+  return {
+    childId: child.id,
+    isCorrect: false,
+    isPartial: false,
+    pointsEarned: POINTS_NONE
+  };
+}
+
+/**
+ * Check if allocation exactly matches child's requests
+ * 
+ * Rules:
+ * - Must have same number of candy types
+ * - Each candy type must match name and quantity exactly
+ * 
+ * @param requests - What the child wants
+ * @param allocation - What was given to the child
+ * @returns true if exact match, false otherwise
+ */
+function isAllocationExactMatch(
+  requests: CandyRequest[],
+  allocation: AllocatedCandy[]
+): boolean {
+  // Must have same number of candy types
+  if (requests.length !== allocation.length) {
+    return false;
+  }
+  
+  // Every request must be matched exactly
+  return requests.every(request => {
+    const allocated = allocation.find(a => a.candyName === request.candyName);
+    return allocated && allocated.quantity === request.quantity;
+  });
+}
+
+/**
+ * Calculate total score for a round based on all child allocations
+ * 
+ * @param children - All children in the round
+ * @param allocations - Allocations made by the player
+ * @returns Round result with total points and per-child breakdown
+ */
+export function calculateRoundScore(
+  children: Child[],
+  allocations: ChildAllocation[]
+): RoundResult {
+  const childResults = children.map(child => {
+    const allocation = allocations.find(a => a.childId === child.id);
+    return calculateChildScore(
+      child,
+      allocation?.allocatedCandies || []
+    );
+  });
+  
+  const totalPoints = childResults.reduce(
+    (sum, result) => sum + result.pointsEarned,
+    0
+  );
+  
+  return {
+    roundNumber: 0, // Will be set by caller
+    pointsEarned: totalPoints,
+    childResults
+  };
+}
+
+/**
+ * Get maximum possible points for a round
+ * 
+ * @param children - All children in the round
+ * @returns Maximum points achievable
+ */
+export function getMaxRoundPoints(children: Child[]): number {
+  return children.reduce((sum, child) => {
+    const candyCount = child.requests.reduce((total, req) => total + req.quantity, 0);
+    const pointsPerCandy = child.isSpecial ? POINTS_SPECIAL_CHILD : POINTS_REGULAR_CHILD;
+    return sum + (candyCount * pointsPerCandy);
+  }, 0);
+}
+
+/**
+ * Calculate percentage score for a round
+ * 
+ * @param roundResult - The round result
+ * @param children - All children in the round
+ * @returns Percentage (0-100)
+ */
+export function getRoundPercentage(
+  roundResult: RoundResult,
+  children: Child[]
+): number {
+  const maxPoints = getMaxRoundPoints(children);
+  if (maxPoints === 0) return 0;
+  return Math.round((roundResult.pointsEarned / maxPoints) * 100);
+}
+
+/**
+ * Get a user-friendly feedback message based on round performance
+ * 
+ * @param percentage - Percentage score (0-100)
+ * @returns Feedback message
+ */
+export function getRoundFeedback(percentage: number): string {
+  if (percentage === 100) return '🎃 Perfect! All children got exactly what they wanted!';
+  if (percentage >= 80) return '👻 Excellent! Almost perfect!';
+  if (percentage >= 60) return '🦇 Good job! Most children are happy!';
+  if (percentage >= 40) return '🕷️ Not bad! Keep trying!';
+  if (percentage >= 20) return '💀 Some children got candy at least!';
+  return '🎃 Better luck next time!';
+}
+
+/**
+ * Count how many children received correct allocations
+ * 
+ * @param childResults - Results for all children
+ * @returns Number of correct allocations
+ */
+export function countCorrectAllocations(childResults: ChildResult[]): number {
+  return childResults.filter(r => r.isCorrect).length;
+}
+
+/**
+ * Count how many children received partial/incorrect allocations
+ * 
+ * @param childResults - Results for all children
+ * @returns Number of partial allocations
+ */
+export function countPartialAllocations(childResults: ChildResult[]): number {
+  return childResults.filter(r => r.isPartial).length;
+}
+
+/**
+ * Count how many children received nothing
+ * 
+ * @param childResults - Results for all children
+ * @returns Number of children with no allocation
+ */
+export function countNoAllocations(childResults: ChildResult[]): number {
+  return childResults.filter(r => !r.isCorrect && !r.isPartial).length;
+}

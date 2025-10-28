@@ -1,4 +1,12 @@
-import type { GameRound, CandyType } from '../types/game.types';
+/**
+ * @deprecated This file is deprecated in v2.0
+ * Game rounds are now loaded from game-config.json instead of random generation.
+ * See src/utils/configLoader.ts for the new approach.
+ *
+ * This file is kept for reference only.
+ */
+
+import type { CandyType } from '../types/game.types';
 import { GAME_CONFIG, CANDY_TEMPLATES } from './constants';
 
 /**
@@ -21,9 +29,12 @@ function randomInt(min: number, max: number): number {
 }
 
 /**
+ * @deprecated Use game-config.json instead (v2.0)
+ *
  * Generates a single game round with random candy types, quantities, and children count
+ * This was used in v1.0 for the equal-division game mode.
  */
-export function generateRound(roundNumber: number): GameRound {
+export function generateRound(roundNumber: number): unknown {
   // Random number of candy types (2-3)
   const numCandyTypes = randomInt(
     GAME_CONFIG.MIN_CANDY_TYPES,
@@ -45,6 +56,7 @@ export function generateRound(roundNumber: number): GameRound {
     quantity: randomInt(GAME_CONFIG.MIN_CANDIES, GAME_CONFIG.MAX_CANDIES)
   }));
 
+  // Return as unknown since this doesn't match the new GameRound interface
   return {
     roundNumber,
     candies,
@@ -54,10 +66,12 @@ export function generateRound(roundNumber: number): GameRound {
 }
 
 /**
+ * @deprecated Use game-config.json instead (v2.0)
+ *
  * Generates all rounds for a complete game session
  */
-export function generateAllRounds(totalRounds: number = GAME_CONFIG.TOTAL_ROUNDS): GameRound[] {
-  const rounds: GameRound[] = [];
+export function generateAllRounds(totalRounds: number = GAME_CONFIG.TOTAL_ROUNDS): unknown[] {
+  const rounds: unknown[] = [];
   
   for (let i = 1; i <= totalRounds; i++) {
     rounds.push(generateRound(i));
