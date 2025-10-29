@@ -23,6 +23,11 @@ export const POINTS_SPECIAL_CHILD = 2;
 export const POINTS_INCORRECT_PER_CANDY = 0.5;
 
 /**
+ * Penalty points per piece of hated candy
+ */
+export const POINTS_HATE_PENALTY = -1;
+
+/**
  * Points awarded for no allocation
  */
 export const POINTS_NONE = 0;
@@ -33,6 +38,7 @@ export const POINTS_NONE = 0;
  * Scoring rules:
  * - Exact match to requests: 1 point per candy (regular) or 2 points per candy (special)
  * - Partial/incorrect: 0.5 points per candy allocated
+ * - Hated candy: -1 point per piece
  * - No allocation: 0 points
  *
  * @param child - The child receiving candy
@@ -43,24 +49,50 @@ export function calculateChildScore(
   child: Child,
   allocation: AllocatedCandy[]
 ): ChildResult {
-  const pointsPerCorrectCandy = child.isSpecial 
-    ? POINTS_SPECIAL_CHILD 
+  const pointsPerCorrectCandy = child.isSpecial
+    ? POINTS_SPECIAL_CHILD
     : POINTS_REGULAR_CHILD;
+  
+  // Calculate hate penalty first
+  let hatePenalty = 0;
+  if (child.hatedCandy) {
+    const hatedAllocation = allocation.find(a => a.candyName === child.hatedCandy);
+    if (hatedAllocation && hatedAllocation.quantity > 0) {
+      hatePenalty = hatedAllocation.quantity * POINTS_HATE_PENALTY;
+    }
+  }
   
   // Check if allocation exactly matches child's requests
   const isExactMatch = isAllocationExactMatch(child.requests, allocation);
   
-  if (isExactMatch) {
-    // Full match: earn points for each candy
+  if (isExactMatch && hatePenalty === 0) {
+    // Perfect match with no hate penalty
     const totalCandies = child.requests.reduce(
-      (sum, req) => sum + req.quantity, 
+      (sum, req) => sum + req.quantity,
       0
     );
     return {
       childId: child.id,
       isCorrect: true,
       isPartial: false,
-      pointsEarned: totalCandies * pointsPerCorrectCandy
+      pointsEarned: totalCandies * pointsPerCorrectCandy,
+      hatePenalty: 0
+    };
+  }
+  
+  // If there's a hate penalty, even exact match becomes partial
+  if (isExactMatch && hatePenalty < 0) {
+    const totalCandies = child.requests.reduce(
+      (sum, req) => sum + req.quantity,
+      0
+    );
+    const basePoints = totalCandies * pointsPerCorrectCandy;
+    return {
+      childId: child.id,
+      isCorrect: false,
+      isPartial: true,
+      pointsEarned: Math.max(0, basePoints + hatePenalty),
+      hatePenalty: hatePenalty
     };
   }
   
@@ -69,16 +101,18 @@ export function calculateChildScore(
     allocation.some(a => a.quantity > 0);
   
   if (hasAllocation) {
-    // Incorrect allocation: partial credit per candy
+    // Incorrect allocation: partial credit per candy + hate penalty
     const totalAllocated = allocation.reduce(
       (sum, candy) => sum + candy.quantity,
       0
     );
+    const partialPoints = totalAllocated * POINTS_INCORRECT_PER_CANDY;
     return {
       childId: child.id,
       isCorrect: false,
       isPartial: true,
-      pointsEarned: totalAllocated * POINTS_INCORRECT_PER_CANDY
+      pointsEarned: Math.max(0, partialPoints + hatePenalty),
+      hatePenalty: hatePenalty
     };
   }
   
@@ -87,7 +121,8 @@ export function calculateChildScore(
     childId: child.id,
     isCorrect: false,
     isPartial: false,
-    pointsEarned: POINTS_NONE
+    pointsEarned: POINTS_NONE,
+    hatePenalty: 0
   };
 }
 

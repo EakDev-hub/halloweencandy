@@ -5,7 +5,8 @@
 ### Scoring System
 - **Regular Child**: 1 point per candy (exact match)
 - **Special Child** 👑: 2 points per candy (exact match)
-- **Incorrect Allocation**: 0.5 points
+- **Incorrect Allocation**: 0.5 points per candy
+- **Hated Candy** 🚫: -1 point per piece (NEW!)
 - **No Allocation**: 0 points
 
 ### Strategic Element
@@ -13,6 +14,49 @@ Players must make **resource allocation decisions** when candy is limited. Shoul
 - Prioritize special children for 2x points?
 - Satisfy more regular children for consistent points?
 - Risk some children getting nothing to maximize special child bonuses?
+- **Avoid giving hated candies to prevent penalties?** (NEW!)
+
+---
+
+## Hate Candy Mechanic 🚫
+
+### Overview
+Each child has exactly **one candy type they hate**. If you give them that candy:
+- **-1 point penalty per piece** of hated candy
+- The penalty applies regardless of other allocations
+- Hated candy is always different from their requests
+
+### Examples
+
+**Example 1: Perfect Allocation (No Hate)**
+- Child wants: 3 Lollipop, 2 Chocolate
+- Child hates: Gummy Bears
+- You give: 3 Lollipop, 2 Chocolate
+- **Score: +5 points** ✅
+
+**Example 2: Perfect + Hated Candy**
+- Child wants: 3 Lollipop, 2 Chocolate
+- Child hates: Gummy Bears
+- You give: 3 Lollipop, 2 Chocolate, 2 Gummy Bears
+- **Score: +5 - 2 = +3 points** ⚠️
+
+**Example 3: Wrong + Hated (Double Penalty)**
+- Child wants: 3 Lollipop
+- Child hates: Chocolate
+- You give: 5 Chocolate
+- **Score: 2.5 (partial) - 5 (hate) = max(0, -2.5) = 0 points** ❌
+
+**Example 4: Special Child with Hate Penalty**
+- Special child wants: 4 Chocolate, 3 Lollipop (14 pts if perfect)
+- Child hates: Candy Corn
+- You give: 4 Chocolate, 3 Lollipop, 1 Candy Corn
+- **Score: +14 - 1 = +13 points** ⚠️
+
+### Strategic Impact
+- **Think before allocating**: Don't just give all available candy
+- **Read carefully**: Check both wants AND hates for each child
+- **Sometimes less is more**: No candy is better than hated candy
+- **Increased difficulty**: Adds cognitive load, especially in later rounds
 
 ---
 
@@ -25,6 +69,7 @@ Players must make **resource allocation decisions** when candy is limited. Shoul
 - ❌ **NO special children** - only regular children
 - ✅ **Abundant candy** - more than enough to satisfy all children
 - ✅ **Simple requests** - 2-3 candy types, small quantities
+- 🚫 **Hate candy present** - teaches mechanic early
 - ⏱️ **Generous time** - 45-50 seconds
 - 👦👧 **2-3 children** per round
 
@@ -39,6 +84,7 @@ Players must make **resource allocation decisions** when candy is limited. Shoul
 - 👑 **1-2 special children** per round
 - ✅ **Still manageable candy** - just enough or slightly under
 - 📊 **Mixed requests** - some overlap in candy types
+- 🚫 **Hate penalties** - must avoid hated candies while optimizing
 - ⏱️ **Moderate time** - 40-45 seconds
 - 👦👧 **3-4 children** per round
 
@@ -58,6 +104,7 @@ Players must make **resource allocation decisions** when candy is limited. Shoul
 - 👑 **2-3 special children** per round
 - ⚠️ **LIMITED CANDY** - **NOT enough to satisfy everyone**
 - 🎯 **Competing demands** - children want same candy types
+- 🚫 **Critical hate avoidance** - penalties hurt more with scarcity
 - ⏱️ **Time pressure** - 30-40 seconds
 - 👦👧 **4-5 children** per round
 
@@ -66,7 +113,9 @@ Players must make **resource allocation decisions** when candy is limited. Shoul
 2. **Point Optimization**: Choose between:
    - Satisfying 1 special child (6-10 points) vs 2 regular children (6-8 points)
    - Giving perfect allocations vs spreading resources
-3. **Risk vs Reward**: Go for high-value special children or play it safe?
+3. **Hate Avoidance**: Must track each child's hated candy to avoid penalties
+4. **Risk vs Reward**: Go for high-value special children or play it safe?
+5. **Triple Threat**: Manage wants, hates, AND limited inventory simultaneously
 
 **Candy Scarcity Pattern**:
 - Round 8-9: 80% of total demand (slightly short)
@@ -102,29 +151,32 @@ Players must make **resource allocation decisions** when candy is limited. Shoul
 
 ## Strategic Scenarios (Rounds 8-15 Examples)
 
-### Example Scenario: Round 12
+### Example Scenario: Round 12 (With Hate Candy)
 **Available Candy**:
 - Lollipop: 10
 - Chocolate: 8
 - Gummy Bears: 6
 
 **Children**:
-1. 👑 Special Child A: 5 Lollipop, 3 Chocolate (16 points if satisfied)
-2. 👑 Special Child B: 4 Gummy Bears, 2 Lollipop (12 points if satisfied)
-3. Regular Child C: 3 Lollipop, 2 Chocolate (5 points if satisfied)
-4. 👑 Special Child D: 3 Chocolate, 2 Gummy Bears (10 points if satisfied)
-5. Regular Child E: 2 Lollipop, 1 Gummy Bears (3 points if satisfied)
+1. 👑 Special Child A: wants 5 Lollipop, 3 Chocolate | **hates Gummy Bears** (16 pts - penalties)
+2. 👑 Special Child B: wants 4 Gummy Bears, 2 Lollipop | **hates Chocolate** (12 pts - penalties)
+3. Regular Child C: wants 3 Lollipop, 2 Chocolate | **hates Mint** (5 points)
+4. 👑 Special Child D: wants 3 Chocolate, 2 Gummy Bears | **hates Lollipop** (10 pts - penalties)
+5. Regular Child E: wants 2 Lollipop, 1 Gummy Bears | **hates Chocolate** (3 pts - penalties)
 
-**Total Demand**: 
-- Lollipop: 12 (need 10)
+**Total Demand**:
+- Lollipop: 12 (have 10) ❌
 - Chocolate: 8 (have 8) ✓
-- Gummy Bears: 7 (need 6)
+- Gummy Bears: 7 (have 6) ❌
 
 **Strategic Decision**:
 - Cannot satisfy everyone!
-- Best strategy: Prioritize highest-value special children
+- **CRITICAL**: Don't give Gummy Bears to Child A (special = -2 pts loss if 2 given)
+- **CRITICAL**: Don't give Chocolate to Child B or E
+- Best strategy: Prioritize special children while avoiding their hated candies
 - Must sacrifice 1-2 children completely
-- Optimal play earns ~30-35 points out of 46 possible
+- Hate penalties make wrong allocations even more costly
+- Optimal play earns ~25-30 points out of 46 possible (hate candy adds complexity)
 
 ---
 

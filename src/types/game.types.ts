@@ -16,6 +16,7 @@ export interface Child {
   isSpecial: boolean;
   requests: CandyRequest[];
   emoji: string;
+  hatedCandy?: string;
 }
 
 export interface AllocatedCandy {
@@ -33,6 +34,7 @@ export interface ChildResult {
   isCorrect: boolean;
   isPartial: boolean;
   pointsEarned: number;
+  hatePenalty?: number;
 }
 
 export interface RoundResult {

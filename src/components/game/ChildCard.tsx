@@ -61,28 +61,29 @@ export default function ChildCard({
   const getResultIndicator = () => {
     if (!result) return null;
     
-    if (result.isCorrect) {
-      return (
-        <div className="flex items-center gap-2 text-green-400">
-          <span className="text-2xl">✅</span>
-          <span className="font-bold">+{result.pointsEarned} points</span>
-        </div>
-      );
-    }
-    
-    if (result.isPartial) {
-      return (
-        <div className="flex items-center gap-2 text-yellow-400">
-          <span className="text-2xl">⚠️</span>
-          <span className="font-bold">+{result.pointsEarned} points (partial)</span>
-        </div>
-      );
-    }
-    
     return (
-      <div className="flex items-center gap-2 text-gray-400">
-        <span className="text-2xl">❌</span>
-        <span className="font-bold">No points</span>
+      <div className="flex flex-col gap-1 items-end">
+        {/* Main score */}
+        <div className={`flex items-center gap-2 ${
+          result.isCorrect ? 'text-green-400' :
+          result.isPartial ? 'text-yellow-400' :
+          'text-gray-400'
+        }`}>
+          <span className="text-2xl">
+            {result.isCorrect ? '✅' : result.isPartial ? '⚠️' : '❌'}
+          </span>
+          <span className="font-bold">
+            {result.pointsEarned > 0 ? '+' : ''}{result.pointsEarned} pts
+          </span>
+        </div>
+        
+        {/* Hate penalty indicator */}
+        {result.hatePenalty && result.hatePenalty < 0 && (
+          <div className="flex items-center gap-1 text-red-400 text-xs">
+            <span>🚫</span>
+            <span>{result.hatePenalty} hate penalty</span>
+          </div>
+        )}
       </div>
     );
   };
@@ -139,6 +140,23 @@ export default function ChildCard({
         </div>
       </div>
 
+      {/* Hated Candy */}
+      {child.hatedCandy && (
+        <div className="mb-1.5 p-1.5 bg-red-900/30 rounded-lg border border-red-500/50">
+          <p className="text-xs text-red-400 mb-1 font-semibold flex items-center gap-1">
+            <span>🚫</span>
+            <span>Hates:</span>
+          </p>
+          <div className="flex items-center gap-1 px-1.5 py-0.5 bg-red-800/40 rounded-full inline-flex">
+            <span className="text-sm">
+              {availableCandies.find(c => c.name === child.hatedCandy)?.emoji || '🍬'}
+            </span>
+            <span className="text-xs text-red-300 font-bold">{child.hatedCandy}</span>
+            <span className="text-xs text-red-400">(-1 pt each)</span>
+          </div>
+        </div>
+      )}
+
       {/* Allocation Inputs - Show ALL candy types */}
       <div className="space-y-1">
         <p className="text-xs text-gray-300 font-semibold mb-1">Give:</p>
@@ -152,6 +170,9 @@ export default function ChildCard({
           const isCorrect = allocated === requestedAmount && requestedAmount > 0;
           const isRequested = requestedAmount > 0;
           
+          // Check if this candy is hated by the child
+          const isHated = child.hatedCandy === candy.name;
+          
           return (
             <div
               key={candy.name}
@@ -160,6 +181,7 @@ export default function ChildCard({
                 ${isOverAllocated ? 'bg-red-900/30 border border-red-500' : 'bg-halloween-black/20'}
                 ${!disabled && isCorrect ? 'border border-green-500' : ''}
                 ${isRequested ? 'bg-halloween-purple/20' : ''}
+              
               `}
             >
               <div className="flex items-center gap-1 flex-1 min-w-30">
@@ -181,6 +203,7 @@ export default function ChildCard({
                   input-field text-center text-sm font-bold
                   ${isOverAllocated ? 'border-red-500 text-red-400' : ''}
                   ${!disabled && isCorrect ? 'border-green-500' : ''}
+                  ${isHated && !isOverAllocated && !isCorrect ? 'border-red-400/50' : ''}
                   disabled:opacity-50
                 `}
               />
