@@ -89,8 +89,7 @@ export default function Leaderboard({ currentScore }: LeaderboardProps) {
                 <span className="text-3xl">{medal}</span>
                 <div className="flex-1">
                   <p className="font-bold text-lg text-white">
-                    {entry.player_nickname}
-                    {isCurrentScore && <span className="ml-2 text-sm text-halloween-orange">(You!)</span>}
+                    {entry.player_nickname}              
                   </p>
                   <p className="text-sm text-gray-400">
                     {entry.rounds_completed} rounds completed

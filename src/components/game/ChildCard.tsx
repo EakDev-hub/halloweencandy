@@ -136,25 +136,27 @@ export default function ChildCard({
         </div>
       </div>
 
-      {/* Allocation Inputs */}
+      {/* Allocation Inputs - Show ALL candy types */}
       <div className="space-y-2">
         <p className="text-sm text-gray-300 font-semibold mb-2">Give to this child:</p>
-        {child.requests.map((request) => {
-          const candy = availableCandies.find(c => c.name === request.candyName);
-          const allocated = getAllocatedQuantity(request.candyName);
-          const available = getAvailableQuantity(request.candyName);
+        {availableCandies.map((candy) => {
+          const allocated = getAllocatedQuantity(candy.name);
+          const available = getAvailableQuantity(candy.name);
           const isOverAllocated = allocated > available;
-          const isCorrect = allocated === request.quantity;
           
-          if (!candy) return null;
+          // Check if this candy is in the child's requests
+          const requestedAmount = child.requests.find(r => r.candyName === candy.name)?.quantity || 0;
+          const isCorrect = allocated === requestedAmount && requestedAmount > 0;
+          const isRequested = requestedAmount > 0;
           
           return (
-            <div 
-              key={request.candyName}
+            <div
+              key={candy.name}
               className={`
                 flex items-center justify-between p-2 rounded-lg
                 ${isOverAllocated ? 'bg-red-900/30 border border-red-500' : 'bg-halloween-black/20'}
                 ${!disabled && isCorrect ? 'border border-green-500' : ''}
+                ${isRequested ? 'bg-halloween-purple/20' : ''}
               `}
             >
               <div className="flex items-center gap-2 flex-1">
@@ -162,7 +164,10 @@ export default function ChildCard({
                 <div className="flex-1">
                   <p className="text-sm font-bold" style={{ color: candy.color }}>
                     {candy.name}
-                  </p>                 
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    {isRequested ? `Wants: ${requestedAmount}` : 'Available: ' + available}
+                  </p>
                 </div>
               </div>
               
@@ -171,7 +176,7 @@ export default function ChildCard({
                 min="0"
                 max={available}
                 value={allocated}
-                onChange={(e) => handleQuantityChange(request.candyName, e.target.value)}
+                onChange={(e) => handleQuantityChange(candy.name, e.target.value)}
                 disabled={disabled}
                 className={`
                   input-field w-20 text-center text-lg font-bold
@@ -185,8 +190,8 @@ export default function ChildCard({
         })}
         
         {/* Warning for over-allocation */}
-        {!disabled && child.requests.some(req => 
-          getAllocatedQuantity(req.candyName) > getAvailableQuantity(req.candyName)
+        {!disabled && availableCandies.some(candy =>
+          getAllocatedQuantity(candy.name) > getAvailableQuantity(candy.name)
         ) && (
           <div className="text-xs text-red-400 flex items-center gap-1 mt-2">
             <span>⚠️</span>

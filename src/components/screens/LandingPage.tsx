@@ -33,22 +33,22 @@ export default function LandingPage() {
           </p>
           <p className="flex items-center justify-center gap-2">
             <span className="text-2xl">👧👦</span>
-            <span>Children come to trick-or-treat!</span>
+            <span>Each child has specific candy requests!</span>
           </p>
           <p className="flex items-center justify-center gap-2">
             <span className="text-2xl">🍬</span>
-            <span>Divide candies <strong>equally</strong> among all children</span>
+            <span>Give each child <strong>exactly</strong> what they want!</span>
           </p>
           <p className="flex items-center justify-center gap-2">
-            <span className="text-2xl">⚖️</span>
-            <span>If not equal? Give <strong>0</strong> of that candy type!</span>
+            <span className="text-2xl">👑</span>
+            <span>Special children earn <strong>2x points!</strong></span>
           </p>
         </div>
 
         {/* Game Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-halloween-black/30 rounded-lg p-4">
-            <div className="text-3xl mb-1">20</div>
+            <div className="text-3xl mb-1">5</div>
             <div className="text-sm text-gray-300">Rounds</div>
           </div>
           <div className="bg-halloween-black/30 rounded-lg p-4">
@@ -56,12 +56,26 @@ export default function LandingPage() {
             <div className="text-sm text-gray-300">Per Round</div>
           </div>
           <div className="bg-halloween-black/30 rounded-lg p-4">
-            <div className="text-3xl mb-1">+10</div>
-            <div className="text-sm text-gray-300">Points</div>
+            <div className="text-3xl mb-1">1-2</div>
+            <div className="text-sm text-gray-300">Points/Candy</div>
           </div>
           <div className="bg-halloween-black/30 rounded-lg p-4">
             <div className="text-3xl mb-1">🏆</div>
             <div className="text-sm text-gray-300">Leaderboard</div>
+          </div>
+        </div>
+
+        {/* Scoring Info */}
+        <div className="bg-halloween-purple/30 rounded-lg p-6 mb-6 text-left">
+          <h3 className="text-xl font-bold text-halloween-orange mb-3 flex items-center gap-2">
+            <span>🎯</span>
+            Scoring System:
+          </h3>
+          <div className="space-y-2 text-gray-200">
+            <p>• <strong>Exact match (regular child):</strong> <span className="text-green-400">1 point per candy</span></p>
+            <p>• <strong>Exact match (special child 👑):</strong> <span className="text-yellow-400">2 points per candy</span></p>
+            <p>• <strong>Wrong type/amount:</strong> <span className="text-orange-400">0.5 points</span></p>
+            <p>• <strong>No allocation:</strong> <span className="text-gray-400">0 points</span></p>
           </div>
         </div>
 
@@ -72,12 +86,12 @@ export default function LandingPage() {
             Example:
           </h3>
           <div className="space-y-2 text-gray-200">
-            <p>• <strong>3 children</strong> are waiting</p>
-            <p>• You have: <span className="font-bold">Candy A: 6</span>, <span className="font-bold">Candy B: 5</span>, <span className="font-bold">Candy C: 9</span></p>
-            <p className="text-halloween-lightOrange mt-3">✅ Correct answer:</p>
-            <p className="ml-4">• Candy A: <strong>2</strong> per child (6 ÷ 3 = 2)</p>
-            <p className="ml-4">• Candy B: <strong>0</strong> per child (5 ÷ 3 = not equal!)</p>
-            <p className="ml-4">• Candy C: <strong>3</strong> per child (9 ÷ 3 = 3)</p>
+            <p>• <strong>Your inventory:</strong> 10🍭 Lollipop, 8🍫 Chocolate, 12🐻 Gummy Bears</p>
+            <p className="mt-3"><strong>Children's requests:</strong></p>
+            <p className="ml-4">• 👧 Child 1 wants: 2🍭 + 1🍫 → <span className="text-green-400">3 points if correct</span></p>
+            <p className="ml-4">• 👦 Child 2 👑 (special) wants: 3🐻 + 1🍭 → <span className="text-yellow-400">8 points if correct!</span></p>
+            <p className="ml-4">• 👧 Child 3 wants: 2🍫 + 2🐻 → <span className="text-green-400">4 points if correct</span></p>
+            <p className="text-halloween-lightOrange mt-3">Max possible: <strong>15 points</strong> this round!</p>
           </div>
         </div>
 
@@ -91,7 +105,7 @@ export default function LandingPage() {
 
         {/* Footer */}
         <div className="mt-8 text-gray-400 text-sm">
-          <p>Race against time • Test your math skills • Top the leaderboard!</p>
+          <p>Manage your candy wisely • Earn bonus points • Top the leaderboard!</p>
         </div>
       </div>
     </div>

@@ -28,7 +28,6 @@ export default function GameBoard() {
   const [score, setScore] = useState(0);
   const [allocations, setAllocations] = useState<ChildAllocation[]>([]);
   const [remainingCandies, setRemainingCandies] = useState<CandyType[]>([]);
-  const [timeRemaining, setTimeRemaining] = useState(40);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -66,7 +65,6 @@ export default function GameBoard() {
       
       setAllocations(initialAllocations);
       setRemainingCandies(currentRound.initialCandies);
-      setTimeRemaining(currentRound.timeLimit);
     }
   }, [currentRound]);
 
@@ -77,13 +75,6 @@ export default function GameBoard() {
       setRemainingCandies(remaining);
     }
   }, [allocations, currentRound]);
-
-  // Handle time up
-  const handleTimeUp = useCallback(() => {
-    if (!isSubmitting && !feedback.show) {
-      handleSubmit(true);
-    }
-  }, [isSubmitting, feedback.show]);
 
   // Handle allocation change for a specific child
   const handleChildAllocationChange = useCallback((childId: string, childAllocation: ChildAllocation) => {
@@ -152,6 +143,13 @@ export default function GameBoard() {
       }
     }, 2000);
   }, [allocations, currentRound, currentRoundIndex, rounds.length, score, isSubmitting, feedback.show, navigate]);
+  // Handle time up
+  const handleTimeUp = useCallback(() => {
+    if (!isSubmitting && !feedback.show) {
+      handleSubmit(true);
+    }
+  }, [isSubmitting, feedback.show, handleSubmit]);
+
 
   // Redirect if no nickname
   useEffect(() => {
@@ -205,11 +203,10 @@ export default function GameBoard() {
             <ScoreDisplay score={score} />
           </div>
           <Timer
-            timeRemaining={timeRemaining}
+            timeRemaining={currentRound.timeLimit}
             totalTime={currentRound.timeLimit}
             onTimeUp={handleTimeUp}
             isPaused={isSubmitting || feedback.show}
-            onTick={(time: number) => setTimeRemaining(time)}
           />
         </div>
 

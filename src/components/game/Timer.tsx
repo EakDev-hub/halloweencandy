@@ -1,53 +1,70 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface TimerProps {
   timeRemaining: number;
   totalTime: number;
   onTimeUp: () => void;
   isPaused?: boolean;
-  onTick?: (time: number) => void;
 }
 
 export default function Timer({
-  timeRemaining,
+  timeRemaining: initialTime,
   totalTime,
   onTimeUp,
-  isPaused = false,
-  onTick
+  isPaused = false
 }: TimerProps) {
+  const [currentTime, setCurrentTime] = useState(initialTime);
   const intervalRef = useRef<number | undefined>(undefined);
+  const hasTriggeredTimeUp = useRef(false);
 
+  // Reset timer when initialTime changes (new round)
   useEffect(() => {
-    if (isPaused) {
+    setCurrentTime(initialTime);
+    hasTriggeredTimeUp.current = false;
+  }, [initialTime]);
+
+  // Trigger onTimeUp when time reaches 0
+  useEffect(() => {
+    if (currentTime === 0 && !hasTriggeredTimeUp.current) {
+      hasTriggeredTimeUp.current = true;
+      onTimeUp();
+    }
+  }, [currentTime, onTimeUp]);
+
+  // Timer countdown logic
+  useEffect(() => {
+    if (isPaused || currentTime === 0) {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+        intervalRef.current = undefined;
       }
       return;
     }
 
     intervalRef.current = window.setInterval(() => {
-      const newTime = timeRemaining - 1;
-      
-      if (newTime <= 0) {
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
+      setCurrentTime(prev => {
+        if (prev <= 1) {
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = undefined;
+          }
+          return 0;
         }
-        onTimeUp();
-      } else if (onTick) {
-        onTick(newTime);
-      }
+        return prev - 1;
+      });
     }, 1000);
 
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+        intervalRef.current = undefined;
       }
     };
-  }, [timeRemaining, isPaused, onTimeUp, onTick]);
+  }, [isPaused, currentTime]);
 
-  const percentage = (timeRemaining / totalTime) * 100;
-  const isWarning = timeRemaining <= 10;
-  const isCritical = timeRemaining <= 5;
+  const percentage = (currentTime / totalTime) * 100;
+  const isWarning = currentTime <= 10;
+  const isCritical = currentTime <= 5;
 
   return (
     <div className="flex flex-col items-center gap-2">
@@ -61,7 +78,7 @@ export default function Timer({
             : 'text-halloween-orange'
         }`}
       >
-        {timeRemaining}s
+        {currentTime}s
       </div>
       <div className="w-32 h-2 bg-halloween-black/50 rounded-full overflow-hidden">
         <div
