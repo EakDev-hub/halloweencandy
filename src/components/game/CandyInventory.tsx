@@ -87,26 +87,7 @@ export default function CandyInventory({
             </div>
           );
         })}
-      </div>
-      
-      {/* Summary */}
-      <div className="mt-4 pt-4 border-t border-gray-700">
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-300">Total candies allocated:</span>
-          <span className="font-bold text-halloween-orange">
-            {initialCandies.reduce((sum, candy) => {
-              const remaining = getRemaining(candy.name);
-              return sum + (candy.quantity - remaining);
-            }, 0)}
-          </span>
-        </div>
-        <div className="flex justify-between text-sm mt-1">
-          <span className="text-gray-300">Total candies remaining:</span>
-          <span className="font-bold text-halloween-orange">
-            {remainingCandies.reduce((sum, candy) => sum + candy.quantity, 0)}
-          </span>
-        </div>
-      </div>
+      </div>    
     </div>
   );
 }

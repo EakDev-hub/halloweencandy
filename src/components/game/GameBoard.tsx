@@ -202,22 +202,21 @@ export default function GameBoard() {
             </h1>
             <ScoreDisplay score={score} />
           </div>
+           {/* Player Info */}
+          <div className="flex items-center gap-4">
+            <p className="text-center text-2xl md:text-3xl font-halloween text-halloween-orange">
+              Player: <span className="text-2xl md:text-3xl font-halloween text-halloween-orange">{playerNickname}</span>
+            </p>
+          </div>
           <Timer
             timeRemaining={currentRound.timeLimit}
             totalTime={currentRound.timeLimit}
             onTimeUp={handleTimeUp}
             isPaused={isSubmitting || feedback.show}
           />
-        </div>
+        </div>  
 
-        {/* Player Info */}
-        <div className="card mb-6">
-          <p className="text-center text-gray-300">
-            Player: <span className="text-halloween-orange font-bold">{playerNickname}</span>
-          </p>
-        </div>
-
-        {/* Candy Inventory */}
+        {/* Candy Inventory */} 
         <CandyInventory 
           initialCandies={currentRound.initialCandies}
           remainingCandies={remainingCandies}

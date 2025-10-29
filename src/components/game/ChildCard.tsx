@@ -165,9 +165,7 @@ export default function ChildCard({
                   <p className="text-sm font-bold" style={{ color: candy.color }}>
                     {candy.name}
                   </p>
-                  <p className="text-xs text-gray-400">
-                    {isRequested ? `Wants: ${requestedAmount}` : 'Available: ' + available}
-                  </p>
+            
                 </div>
               </div>
               
