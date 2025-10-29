@@ -14,7 +14,7 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-halloween-gradient">
-      <div className={`card max-w-2xl w-full text-center transform transition-all duration-300 ${isAnimating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}>
+      <div className={`card max-w-3xl w-full text-center transform transition-all duration-300 ${isAnimating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}>
         {/* Title */}
         <div className="mb-8">
           <h1 className="text-5xl md:text-7xl font-halloween text-halloween-orange mb-4 animate-pulse-slow">
@@ -48,11 +48,11 @@ export default function LandingPage() {
         {/* Game Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-halloween-black/30 rounded-lg p-4">
-            <div className="text-3xl mb-1">5</div>
+            <div className="text-3xl mb-1">20</div>
             <div className="text-sm text-gray-300">Rounds</div>
           </div>
           <div className="bg-halloween-black/30 rounded-lg p-4">
-            <div className="text-3xl mb-1">40s</div>
+            <div className="text-3xl mb-1">120s</div>
             <div className="text-sm text-gray-300">Per Round</div>
           </div>
           <div className="bg-halloween-black/30 rounded-lg p-4">
@@ -91,7 +91,6 @@ export default function LandingPage() {
             <p className="ml-4">• 👧 Child 1 wants: 2🍭 + 1🍫 → <span className="text-green-400">3 points if correct</span></p>
             <p className="ml-4">• 👦 Child 2 👑 (special) wants: 3🐻 + 1🍭 → <span className="text-yellow-400">8 points if correct!</span></p>
             <p className="ml-4">• 👧 Child 3 wants: 2🍫 + 2🐻 → <span className="text-green-400">4 points if correct</span></p>
-            <p className="text-halloween-lightOrange mt-3">Max possible: <strong>15 points</strong> this round!</p>
           </div>
         </div>
 
