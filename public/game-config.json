@@ -1,17 +1,16 @@
 {
   "gameSettings": {
-    "totalRounds": 5,
+    "totalRounds": 15,
     "timeLimitPerRound": 40,
-    "version": "2.0.0"
+    "version": "2.1.0"
   },
   "rounds": [
     {
       "roundNumber": 1,
-      "timeLimit": 40,
+      "timeLimit": 50,
       "initialCandies": [
-        { "name": "Lollipop", "quantity": 10, "color": "#FF1493", "emoji": "🍭" },
-        { "name": "Chocolate", "quantity": 8, "color": "#8B4513", "emoji": "🍫" },
-        { "name": "Gummy Bears", "quantity": 12, "color": "#FF6347", "emoji": "🐻" }
+        { "name": "Lollipop", "quantity": 12, "color": "#FF1493", "emoji": "🍭" },
+        { "name": "Chocolate", "quantity": 10, "color": "#8B4513", "emoji": "🍫" }
       ],
       "children": [
         {
@@ -19,37 +18,27 @@
           "isSpecial": false,
           "emoji": "👧",
           "requests": [
-            { "candyName": "Lollipop", "quantity": 2 },
-            { "candyName": "Chocolate", "quantity": 1 }
+            { "candyName": "Lollipop", "quantity": 3 },
+            { "candyName": "Chocolate", "quantity": 2 }
           ]
         },
         {
           "id": "child-2",
-          "isSpecial": true,
+          "isSpecial": false,
           "emoji": "👦",
           "requests": [
-            { "candyName": "Gummy Bears", "quantity": 3 },
-            { "candyName": "Lollipop", "quantity": 1 }
-          ]
-        },
-        {
-          "id": "child-3",
-          "isSpecial": false,
-          "emoji": "👧",
-          "requests": [
-            { "candyName": "Chocolate", "quantity": 2 },
-            { "candyName": "Gummy Bears", "quantity": 2 }
+            { "candyName": "Chocolate", "quantity": 3 }
           ]
         }
       ]
     },
     {
       "roundNumber": 2,
-      "timeLimit": 35,
+      "timeLimit": 48,
       "initialCandies": [
-        { "name": "Candy Corn", "quantity": 15, "color": "#FFA500", "emoji": "🌽" },
-        { "name": "Mint", "quantity": 10, "color": "#98FF98", "emoji": "🍬" },
-        { "name": "Lemon Drop", "quantity": 8, "color": "#FFFF00", "emoji": "🍋" }
+        { "name": "Gummy Bears", "quantity": 15, "color": "#FF6347", "emoji": "🐻" },
+        { "name": "Candy Corn", "quantity": 12, "color": "#FFA500", "emoji": "🌽" },
+        { "name": "Mint", "quantity": 8, "color": "#98FF98", "emoji": "🍬" }
       ],
       "children": [
         {
@@ -57,7 +46,7 @@
           "isSpecial": false,
           "emoji": "👦",
           "requests": [
-            { "candyName": "Candy Corn", "quantity": 5 }
+            { "candyName": "Gummy Bears", "quantity": 4 }
           ]
         },
         {
@@ -65,25 +54,17 @@
           "isSpecial": false,
           "emoji": "👧",
           "requests": [
-            { "candyName": "Mint", "quantity": 3 },
-            { "candyName": "Lemon Drop", "quantity": 2 }
-          ]
-        },
-        {
-          "id": "child-3",
-          "isSpecial": true,
-          "emoji": "👦",
-          "requests": [
-            { "candyName": "Candy Corn", "quantity": 4 },
+            { "candyName": "Candy Corn", "quantity": 3 },
             { "candyName": "Mint", "quantity": 2 }
           ]
         },
         {
-          "id": "child-4",
+          "id": "child-3",
           "isSpecial": false,
-          "emoji": "👧",
+          "emoji": "👦",
           "requests": [
-            { "candyName": "Lemon Drop", "quantity": 3 }
+            { "candyName": "Gummy Bears", "quantity": 3 },
+            { "candyName": "Candy Corn", "quantity": 2 }
           ]
         }
       ]
@@ -92,8 +73,265 @@
       "roundNumber": 3,
       "timeLimit": 45,
       "initialCandies": [
-        { "name": "Lollipop", "quantity": 20, "color": "#FF1493", "emoji": "🍭" },
-        { "name": "Chocolate", "quantity": 15, "color": "#8B4513", "emoji": "🍫" }
+        { "name": "Lollipop", "quantity": 14, "color": "#FF1493", "emoji": "🍭" },
+        { "name": "Chocolate", "quantity": 11, "color": "#8B4513", "emoji": "🍫" },
+        { "name": "Lemon Drop", "quantity": 9, "color": "#FFFF00", "emoji": "🍋" }
+      ],
+      "children": [
+        {
+          "id": "child-1",
+          "isSpecial": false,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Lollipop", "quantity": 4 },
+            { "candyName": "Chocolate", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-2",
+          "isSpecial": false,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Chocolate", "quantity": 3 },
+            { "candyName": "Lemon Drop", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-3",
+          "isSpecial": false,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Lollipop", "quantity": 3 },
+            { "candyName": "Lemon Drop", "quantity": 3 }
+          ]
+        }
+      ]
+    },
+    {
+      "roundNumber": 4,
+      "timeLimit": 45,
+      "initialCandies": [
+        { "name": "Gummy Bears", "quantity": 16, "color": "#FF6347", "emoji": "🐻" },
+        { "name": "Candy Corn", "quantity": 12, "color": "#FFA500", "emoji": "🌽" },
+        { "name": "Mint", "quantity": 10, "color": "#98FF98", "emoji": "🍬" }
+      ],
+      "children": [
+        {
+          "id": "child-1",
+          "isSpecial": true,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 5 },
+            { "candyName": "Candy Corn", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-2",
+          "isSpecial": false,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Mint", "quantity": 4 },
+            { "candyName": "Candy Corn", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-3",
+          "isSpecial": false,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 4 },
+            { "candyName": "Mint", "quantity": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "roundNumber": 5,
+      "timeLimit": 43,
+      "initialCandies": [
+        { "name": "Lollipop", "quantity": 14, "color": "#FF1493", "emoji": "🍭" },
+        { "name": "Chocolate", "quantity": 11, "color": "#8B4513", "emoji": "🍫" },
+        { "name": "Lemon Drop", "quantity": 8, "color": "#FFFF00", "emoji": "🍋" }
+      ],
+      "children": [
+        {
+          "id": "child-1",
+          "isSpecial": false,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Lollipop", "quantity": 4 },
+            { "candyName": "Chocolate", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-2",
+          "isSpecial": true,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Chocolate", "quantity": 4 },
+            { "candyName": "Lemon Drop", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-3",
+          "isSpecial": false,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Lollipop", "quantity": 5 },
+            { "candyName": "Lemon Drop", "quantity": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "roundNumber": 6,
+      "timeLimit": 40,
+      "initialCandies": [
+        { "name": "Gummy Bears", "quantity": 15, "color": "#FF6347", "emoji": "🐻" },
+        { "name": "Candy Corn", "quantity": 12, "color": "#FFA500", "emoji": "🌽" },
+        { "name": "Mint", "quantity": 10, "color": "#98FF98", "emoji": "🍬" },
+        { "name": "Lollipop", "quantity": 8, "color": "#FF1493", "emoji": "🍭" }
+      ],
+      "children": [
+        {
+          "id": "child-1",
+          "isSpecial": true,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 5 },
+            { "candyName": "Candy Corn", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-2",
+          "isSpecial": false,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Mint", "quantity": 4 },
+            { "candyName": "Lollipop", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-3",
+          "isSpecial": true,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 4 },
+            { "candyName": "Mint", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-4",
+          "isSpecial": false,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Candy Corn", "quantity": 4 },
+            { "candyName": "Lollipop", "quantity": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "roundNumber": 7,
+      "timeLimit": 40,
+      "initialCandies": [
+        { "name": "Chocolate", "quantity": 14, "color": "#8B4513", "emoji": "🍫" },
+        { "name": "Lemon Drop", "quantity": 11, "color": "#FFFF00", "emoji": "🍋" },
+        { "name": "Lollipop", "quantity": 13, "color": "#FF1493", "emoji": "🍭" }
+      ],
+      "children": [
+        {
+          "id": "child-1",
+          "isSpecial": true,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Chocolate", "quantity": 5 },
+            { "candyName": "Lemon Drop", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-2",
+          "isSpecial": false,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Lollipop", "quantity": 4 },
+            { "candyName": "Chocolate", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-3",
+          "isSpecial": true,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Lemon Drop", "quantity": 4 },
+            { "candyName": "Lollipop", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-4",
+          "isSpecial": false,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Chocolate", "quantity": 3 },
+            { "candyName": "Lollipop", "quantity": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "roundNumber": 8,
+      "timeLimit": 38,
+      "initialCandies": [
+        { "name": "Gummy Bears", "quantity": 13, "color": "#FF6347", "emoji": "🐻" },
+        { "name": "Candy Corn", "quantity": 10, "color": "#FFA500", "emoji": "🌽" },
+        { "name": "Mint", "quantity": 8, "color": "#98FF98", "emoji": "🍬" }
+      ],
+      "children": [
+        {
+          "id": "child-1",
+          "isSpecial": true,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 5 },
+            { "candyName": "Candy Corn", "quantity": 4 }
+          ]
+        },
+        {
+          "id": "child-2",
+          "isSpecial": false,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 4 },
+            { "candyName": "Mint", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-3",
+          "isSpecial": true,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Candy Corn", "quantity": 4 },
+            { "candyName": "Mint", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-4",
+          "isSpecial": false,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 3 },
+            { "candyName": "Candy Corn", "quantity": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "roundNumber": 9,
+      "timeLimit": 38,
+      "initialCandies": [
+        { "name": "Lollipop", "quantity": 11, "color": "#FF1493", "emoji": "🍭" },
+        { "name": "Chocolate", "quantity": 9, "color": "#8B4513", "emoji": "🍫" },
+        { "name": "Lemon Drop", "quantity": 7, "color": "#FFFF00", "emoji": "🍋" }
       ],
       "children": [
         {
@@ -111,7 +349,7 @@
           "emoji": "👦",
           "requests": [
             { "candyName": "Chocolate", "quantity": 4 },
-            { "candyName": "Lollipop", "quantity": 2 }
+            { "candyName": "Lemon Drop", "quantity": 3 }
           ]
         },
         {
@@ -119,26 +357,38 @@
           "isSpecial": false,
           "emoji": "👧",
           "requests": [
-            { "candyName": "Lollipop", "quantity": 3 }
+            { "candyName": "Lollipop", "quantity": 4 },
+            { "candyName": "Lemon Drop", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-4",
+          "isSpecial": false,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Chocolate", "quantity": 3 },
+            { "candyName": "Lollipop", "quantity": 2 }
           ]
         }
       ]
     },
     {
-      "roundNumber": 4,
-      "timeLimit": 30,
+      "roundNumber": 10,
+      "timeLimit": 35,
       "initialCandies": [
-        { "name": "Gummy Bears", "quantity": 18, "color": "#FF6347", "emoji": "🐻" },
-        { "name": "Candy Corn", "quantity": 12, "color": "#FFA500", "emoji": "🌽" },
-        { "name": "Mint", "quantity": 9, "color": "#98FF98", "emoji": "🍬" }
+        { "name": "Gummy Bears", "quantity": 12, "color": "#FF6347", "emoji": "🐻" },
+        { "name": "Candy Corn", "quantity": 10, "color": "#FFA500", "emoji": "🌽" },
+        { "name": "Mint", "quantity": 8, "color": "#98FF98", "emoji": "🍬" },
+        { "name": "Lollipop", "quantity": 7, "color": "#FF1493", "emoji": "🍭" }
       ],
       "children": [
         {
           "id": "child-1",
-          "isSpecial": false,
+          "isSpecial": true,
           "emoji": "👦",
           "requests": [
-            { "candyName": "Gummy Bears", "quantity": 6 }
+            { "candyName": "Gummy Bears", "quantity": 5 },
+            { "candyName": "Candy Corn", "quantity": 4 }
           ]
         },
         {
@@ -146,8 +396,8 @@
           "isSpecial": false,
           "emoji": "👧",
           "requests": [
-            { "candyName": "Candy Corn", "quantity": 4 },
-            { "candyName": "Mint", "quantity": 3 }
+            { "candyName": "Mint", "quantity": 4 },
+            { "candyName": "Lollipop", "quantity": 3 }
           ]
         },
         {
@@ -156,19 +406,36 @@
           "emoji": "👦",
           "requests": [
             { "candyName": "Gummy Bears", "quantity": 4 },
+            { "candyName": "Mint", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-4",
+          "isSpecial": false,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Candy Corn", "quantity": 4 },
+            { "candyName": "Lollipop", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-5",
+          "isSpecial": false,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 3 },
             { "candyName": "Candy Corn", "quantity": 2 }
           ]
         }
       ]
     },
     {
-      "roundNumber": 5,
-      "timeLimit": 50,
+      "roundNumber": 11,
+      "timeLimit": 35,
       "initialCandies": [
-        { "name": "Lollipop", "quantity": 25, "color": "#FF1493", "emoji": "🍭" },
-        { "name": "Chocolate", "quantity": 20, "color": "#8B4513", "emoji": "🍫" },
-        { "name": "Gummy Bears", "quantity": 15, "color": "#FF6347", "emoji": "🐻" },
-        { "name": "Candy Corn", "quantity": 18, "color": "#FFA500", "emoji": "🌽" }
+        { "name": "Chocolate", "quantity": 11, "color": "#8B4513", "emoji": "🍫" },
+        { "name": "Lemon Drop", "quantity": 9, "color": "#FFFF00", "emoji": "🍋" },
+        { "name": "Lollipop", "quantity": 10, "color": "#FF1493", "emoji": "🍭" }
       ],
       "children": [
         {
@@ -176,17 +443,17 @@
           "isSpecial": true,
           "emoji": "👧",
           "requests": [
-            { "candyName": "Lollipop", "quantity": 6 },
-            { "candyName": "Chocolate", "quantity": 4 }
+            { "candyName": "Chocolate", "quantity": 5 },
+            { "candyName": "Lemon Drop", "quantity": 4 }
           ]
         },
         {
           "id": "child-2",
-          "isSpecial": false,
+          "isSpecial": true,
           "emoji": "👦",
           "requests": [
-            { "candyName": "Gummy Bears", "quantity": 5 },
-            { "candyName": "Candy Corn", "quantity": 3 }
+            { "candyName": "Lollipop", "quantity": 5 },
+            { "candyName": "Chocolate", "quantity": 3 }
           ]
         },
         {
@@ -194,9 +461,8 @@
           "isSpecial": true,
           "emoji": "👧",
           "requests": [
-            { "candyName": "Chocolate", "quantity": 5 },
-            { "candyName": "Lollipop", "quantity": 3 },
-            { "candyName": "Gummy Bears", "quantity": 2 }
+            { "candyName": "Lemon Drop", "quantity": 4 },
+            { "candyName": "Lollipop", "quantity": 3 }
           ]
         },
         {
@@ -204,7 +470,119 @@
           "isSpecial": false,
           "emoji": "👦",
           "requests": [
-            { "candyName": "Candy Corn", "quantity": 6 },
+            { "candyName": "Chocolate", "quantity": 3 },
+            { "candyName": "Lemon Drop", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-5",
+          "isSpecial": false,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Lollipop", "quantity": 3 },
+            { "candyName": "Chocolate", "quantity": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "roundNumber": 12,
+      "timeLimit": 33,
+      "initialCandies": [
+        { "name": "Gummy Bears", "quantity": 10, "color": "#FF6347", "emoji": "🐻" },
+        { "name": "Candy Corn", "quantity": 8, "color": "#FFA500", "emoji": "🌽" },
+        { "name": "Mint", "quantity": 7, "color": "#98FF98", "emoji": "🍬" }
+      ],
+      "children": [
+        {
+          "id": "child-1",
+          "isSpecial": true,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 5 },
+            { "candyName": "Candy Corn", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-2",
+          "isSpecial": true,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 4 },
+            { "candyName": "Mint", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-3",
+          "isSpecial": false,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Candy Corn", "quantity": 4 },
+            { "candyName": "Mint", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-4",
+          "isSpecial": true,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Mint", "quantity": 3 },
+            { "candyName": "Gummy Bears", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-5",
+          "isSpecial": false,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Candy Corn", "quantity": 3 },
+            { "candyName": "Gummy Bears", "quantity": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "roundNumber": 13,
+      "timeLimit": 33,
+      "initialCandies": [
+        { "name": "Lollipop", "quantity": 9, "color": "#FF1493", "emoji": "🍭" },
+        { "name": "Chocolate", "quantity": 8, "color": "#8B4513", "emoji": "🍫" },
+        { "name": "Lemon Drop", "quantity": 6, "color": "#FFFF00", "emoji": "🍋" }
+      ],
+      "children": [
+        {
+          "id": "child-1",
+          "isSpecial": true,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Lollipop", "quantity": 5 },
+            { "candyName": "Chocolate", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-2",
+          "isSpecial": true,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Chocolate", "quantity": 4 },
+            { "candyName": "Lemon Drop", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-3",
+          "isSpecial": true,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Lemon Drop", "quantity": 3 },
+            { "candyName": "Lollipop", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-4",
+          "isSpecial": false,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Chocolate", "quantity": 3 },
             { "candyName": "Lollipop", "quantity": 2 }
           ]
         },
@@ -213,8 +591,122 @@
           "isSpecial": false,
           "emoji": "👧",
           "requests": [
-            { "candyName": "Chocolate", "quantity": 3 },
+            { "candyName": "Lemon Drop", "quantity": 2 },
+            { "candyName": "Chocolate", "quantity": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "roundNumber": 14,
+      "timeLimit": 30,
+      "initialCandies": [
+        { "name": "Gummy Bears", "quantity": 9, "color": "#FF6347", "emoji": "🐻" },
+        { "name": "Candy Corn", "quantity": 7, "color": "#FFA500", "emoji": "🌽" },
+        { "name": "Mint", "quantity": 6, "color": "#98FF98", "emoji": "🍬" },
+        { "name": "Lollipop", "quantity": 5, "color": "#FF1493", "emoji": "🍭" }
+      ],
+      "children": [
+        {
+          "id": "child-1",
+          "isSpecial": true,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 5 },
+            { "candyName": "Candy Corn", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-2",
+          "isSpecial": true,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Mint", "quantity": 4 },
+            { "candyName": "Lollipop", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-3",
+          "isSpecial": false,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 4 },
+            { "candyName": "Candy Corn", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-4",
+          "isSpecial": true,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Candy Corn", "quantity": 3 },
+            { "candyName": "Mint", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-5",
+          "isSpecial": false,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Lollipop", "quantity": 2 },
             { "candyName": "Gummy Bears", "quantity": 2 }
+          ]
+        }
+      ]
+    },
+    {
+      "roundNumber": 15,
+      "timeLimit": 30,
+      "initialCandies": [
+        { "name": "Lollipop", "quantity": 8, "color": "#FF1493", "emoji": "🍭" },
+        { "name": "Chocolate", "quantity": 7, "color": "#8B4513", "emoji": "🍫" },
+        { "name": "Gummy Bears", "quantity": 6, "color": "#FF6347", "emoji": "🐻" },
+        { "name": "Lemon Drop", "quantity": 5, "color": "#FFFF00", "emoji": "🍋" }
+      ],
+      "children": [
+        {
+          "id": "child-1",
+          "isSpecial": true,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Lollipop", "quantity": 5 },
+            { "candyName": "Chocolate", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-2",
+          "isSpecial": true,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 4 },
+            { "candyName": "Lemon Drop", "quantity": 3 }
+          ]
+        },
+        {
+          "id": "child-3",
+          "isSpecial": true,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Chocolate", "quantity": 4 },
+            { "candyName": "Lollipop", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-4",
+          "isSpecial": true,
+          "emoji": "👦",
+          "requests": [
+            { "candyName": "Gummy Bears", "quantity": 3 },
+            { "candyName": "Lemon Drop", "quantity": 2 }
+          ]
+        },
+        {
+          "id": "child-5",
+          "isSpecial": false,
+          "emoji": "👧",
+          "requests": [
+            { "candyName": "Chocolate", "quantity": 2 },
+            { "candyName": "Lollipop", "quantity": 2 }
           ]
         }
       ]

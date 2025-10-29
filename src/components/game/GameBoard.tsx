@@ -244,9 +244,9 @@ export default function GameBoard() {
                 <ChildCard
                   key={child.id}
                   child={child}
-                  availableCandies={remainingCandies}
+                  availableCandies={currentRound.initialCandies}
                   allocation={childAllocation.allocatedCandies}
-                  onChange={(newAllocation) => 
+                  onChange={(newAllocation) =>
                     handleChildAllocationChange(child.id, {
                       childId: child.id,
                       allocatedCandies: newAllocation
