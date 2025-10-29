@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import HalloweenDecorations from '../decorations/HalloweenDecorations';
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -13,8 +14,11 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-halloween-gradient">
-      <div className={`card max-w-3xl w-full text-center transform transition-all duration-300 ${isAnimating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}>
+    <div className="min-h-screen flex items-center justify-center p-4 bg-halloween-gradient relative">
+      {/* Halloween Decorations with Animations */}
+      <HalloweenDecorations />
+      
+      <div className={`card max-w-3xl w-full text-center transform transition-all duration-300 ${isAnimating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'} relative z-20`}>
         {/* Title */}
         <div className="mb-8">
           <h1 className="text-5xl md:text-7xl font-halloween text-halloween-orange mb-4 animate-pulse-slow">
