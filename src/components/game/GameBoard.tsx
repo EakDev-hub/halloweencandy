@@ -16,6 +16,7 @@ import ChildCard from './ChildCard';
 import Timer from './Timer';
 import ScoreDisplay from './ScoreDisplay';
 import FeedbackModal from './FeedbackModal';
+import GameDecorations from '../decorations/GameDecorations';
 
 export default function GameBoard() {
   const navigate = useNavigate();
@@ -194,8 +195,11 @@ export default function GameBoard() {
   }
 
   return (
-    <div className="min-h-screen bg-halloween-gradient p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-halloween-gradient p-4 md:p-8 relative">
+      {/* Game Decorations with Animations */}
+      <GameDecorations />
+      
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
           <div className="flex items-center gap-4">
