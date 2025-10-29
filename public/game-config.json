@@ -9,8 +9,8 @@
       "roundNumber": 1,
       "timeLimit": 50,
       "initialCandies": [
-        { "name": "Lollipop", "quantity": 12, "color": "#FF1493", "emoji": "🍭" },
-        { "name": "Chocolate", "quantity": 10, "color": "#8B4513", "emoji": "🍫" }
+        { "name": "Lollipop", "quantity": 3, "color": "#FF1493", "emoji": "🍭" },
+        { "name": "Chocolate", "quantity": 5, "color": "#8B4513", "emoji": "🍫" }
       ],
       "children": [
         {
@@ -38,9 +38,9 @@
       "roundNumber": 2,
       "timeLimit": 48,
       "initialCandies": [
-        { "name": "Gummy Bears", "quantity": 15, "color": "#FF6347", "emoji": "🐻" },
-        { "name": "Candy Corn", "quantity": 12, "color": "#FFA500", "emoji": "🌽" },
-        { "name": "Mint", "quantity": 8, "color": "#98FF98", "emoji": "🍬" }
+        { "name": "Gummy Bears", "quantity": 7, "color": "#FF6347", "emoji": "🐻" },
+        { "name": "Candy Corn", "quantity": 5, "color": "#FFA500", "emoji": "🌽" },
+        { "name": "Mint", "quantity": 6, "color": "#98FF98", "emoji": "🍬" }
       ],
       "children": [
         {

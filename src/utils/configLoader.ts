@@ -165,15 +165,6 @@ function validateGameConfig(config: GameConfig): void {
         requestTotals.set(request.candyName, current + request.quantity);
       });
     });
-    
-    round.initialCandies.forEach(candy => {
-      const requested = requestTotals.get(candy.name) || 0;
-      if (requested > candy.quantity) {
-        console.warn(
-          `Round ${round.roundNumber}: Total requests for ${candy.name} (${requested}) exceed inventory (${candy.quantity}). Round may be unsolvable.`
-        );
-      }
-    });
   });
 }
 

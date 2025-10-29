@@ -19,13 +19,21 @@ export default function Timer({
 
   // Reset timer when initialTime changes (new round)
   useEffect(() => {
+    console.log('🔵 Timer.tsx: Resetting timer to', initialTime, 'seconds');
     setCurrentTime(initialTime);
-    hasTriggeredTimeUp.current = false;
+    // Set to true temporarily to prevent immediate re-trigger during state update
+    hasTriggeredTimeUp.current = true;
+    // Reset to false after state has settled
+    const timer = setTimeout(() => {
+      hasTriggeredTimeUp.current = false;
+    }, 100);
+    return () => clearTimeout(timer);
   }, [initialTime]);
 
   // Trigger onTimeUp when time reaches 0
   useEffect(() => {
     if (currentTime === 0 && !hasTriggeredTimeUp.current) {
+      console.log('🔴 Timer.tsx: Time reached 0, triggering onTimeUp');
       hasTriggeredTimeUp.current = true;
       onTimeUp();
     }

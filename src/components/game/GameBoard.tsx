@@ -87,7 +87,17 @@ export default function GameBoard() {
 
   // Submit answer
   const handleSubmit = useCallback((isTimeUp = false) => {
-    if (isSubmitting || feedback.show || !currentRound) return;
+    console.log('🟡 GameBoard: handleSubmit called', {
+      isTimeUp,
+      currentRoundIndex,
+      isSubmitting,
+      feedbackShow: feedback.show
+    });
+    
+    if (isSubmitting || feedback.show || !currentRound) {
+      console.log('⚠️ GameBoard: handleSubmit blocked', { isSubmitting, feedbackShow: feedback.show });
+      return;
+    }
     
     setIsSubmitting(true);
     
@@ -132,24 +142,45 @@ export default function GameBoard() {
 
     // Move to next round or end game
     setTimeout(() => {
+      console.log('🟢 GameBoard: Timeout callback executing', {
+        currentRoundIndex,
+        totalRounds: rounds.length
+      });
+      
       setFeedback({ show: false, isCorrect: false, message: '' });
       setIsSubmitting(false);
 
       if (currentRoundIndex + 1 >= rounds.length) {
         // Game over
+        console.log('🏁 GameBoard: Game Over');
         const finalScore = score + roundResult.pointsEarned;
         localStorage.setItem('finalScore', finalScore.toString());
         localStorage.setItem('roundsCompleted', rounds.length.toString());
         navigate('/game-over');
       } else {
-        setCurrentRoundIndex(prev => prev + 1);
+        console.log('➡️ GameBoard: Moving to next round', {
+          from: currentRoundIndex,
+          to: currentRoundIndex + 1
+        });
+        setCurrentRoundIndex(prev => {
+          const next = prev + 1;
+          console.log('🔄 GameBoard: setCurrentRoundIndex', { prev, next });
+          return next;
+        });
       }
     }, 2000);
   }, [allocations, currentRound, currentRoundIndex, rounds.length, score, isSubmitting, feedback.show, navigate]);
   // Handle time up
   const handleTimeUp = useCallback(() => {
+    console.log('⏰ GameBoard: handleTimeUp called', {
+      isSubmitting,
+      feedbackShow: feedback.show
+    });
+    
     if (!isSubmitting && !feedback.show) {
       handleSubmit(true);
+    } else {
+      console.log('⚠️ GameBoard: handleTimeUp blocked');
     }
   }, [isSubmitting, feedback.show, handleSubmit]);
 
