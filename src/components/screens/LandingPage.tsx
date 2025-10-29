@@ -49,26 +49,6 @@ export default function LandingPage() {
           </p>
         </div>
 
-        {/* Game Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-halloween-black/30 rounded-lg p-4">
-            <div className="text-3xl mb-1">20</div>
-            <div className="text-sm text-gray-300">Rounds</div>
-          </div>
-          <div className="bg-halloween-black/30 rounded-lg p-4">
-            <div className="text-3xl mb-1">120s</div>
-            <div className="text-sm text-gray-300">Per Round</div>
-          </div>
-          <div className="bg-halloween-black/30 rounded-lg p-4">
-            <div className="text-3xl mb-1">1-2</div>
-            <div className="text-sm text-gray-300">Points/Candy</div>
-          </div>
-          <div className="bg-halloween-black/30 rounded-lg p-4">
-            <div className="text-3xl mb-1">🏆</div>
-            <div className="text-sm text-gray-300">Leaderboard</div>
-          </div>
-        </div>
-
         {/* Scoring Info */}
         <div className="bg-halloween-purple/30 rounded-lg p-6 mb-6 text-left">
           <h3 className="text-xl font-bold text-halloween-orange mb-3 flex items-center gap-2">
@@ -80,21 +60,6 @@ export default function LandingPage() {
             <p>• <strong>Exact match (special child 👑):</strong> <span className="text-yellow-400">2 points per candy</span></p>
             <p>• <strong>Wrong type/amount:</strong> <span className="text-orange-400">0.5 points</span></p>
             <p>• <strong>No allocation:</strong> <span className="text-gray-400">0 points</span></p>
-          </div>
-        </div>
-
-        {/* Example */}
-        <div className="bg-halloween-purple/30 rounded-lg p-6 mb-8 text-left">
-          <h3 className="text-xl font-bold text-halloween-orange mb-3 flex items-center gap-2">
-            <span>💡</span>
-            Example:
-          </h3>
-          <div className="space-y-2 text-gray-200">
-            <p>• <strong>Your inventory:</strong> 10🍭 Lollipop, 8🍫 Chocolate, 12🐻 Gummy Bears</p>
-            <p className="mt-3"><strong>Children's requests:</strong></p>
-            <p className="ml-4">• 👧 Child 1 wants: 2🍭 + 1🍫 → <span className="text-green-400">3 points if correct</span></p>
-            <p className="ml-4">• 👦 Child 2 👑 (special) wants: 3🐻 + 1🍭 → <span className="text-yellow-400">8 points if correct!</span></p>
-            <p className="ml-4">• 👧 Child 3 wants: 2🍫 + 2🐻 → <span className="text-green-400">4 points if correct</span></p>
           </div>
         </div>
 

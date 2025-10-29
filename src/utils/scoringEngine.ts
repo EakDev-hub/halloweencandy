@@ -18,9 +18,9 @@ export const POINTS_REGULAR_CHILD = 1;
 export const POINTS_SPECIAL_CHILD = 2;
 
 /**
- * Points awarded for incorrect allocation (wrong type or amount)
+ * Points awarded for incorrect allocation (wrong type or amount) per candy
  */
-export const POINTS_INCORRECT = 0.5;
+export const POINTS_INCORRECT_PER_CANDY = 0.5;
 
 /**
  * Points awarded for no allocation
@@ -29,12 +29,12 @@ export const POINTS_NONE = 0;
 
 /**
  * Calculate points earned for allocating candies to a child
- * 
+ *
  * Scoring rules:
  * - Exact match to requests: 1 point per candy (regular) or 2 points per candy (special)
- * - Partial/incorrect: 0.5 points
+ * - Partial/incorrect: 0.5 points per candy allocated
  * - No allocation: 0 points
- * 
+ *
  * @param child - The child receiving candy
  * @param allocation - What was allocated to this child
  * @returns Score breakdown with points earned
@@ -65,16 +65,20 @@ export function calculateChildScore(
   }
   
   // Check if player gave something (even if wrong)
-  const hasAllocation = allocation.length > 0 && 
+  const hasAllocation = allocation.length > 0 &&
     allocation.some(a => a.quantity > 0);
   
   if (hasAllocation) {
-    // Incorrect allocation: partial credit
+    // Incorrect allocation: partial credit per candy
+    const totalAllocated = allocation.reduce(
+      (sum, candy) => sum + candy.quantity,
+      0
+    );
     return {
       childId: child.id,
       isCorrect: false,
       isPartial: true,
-      pointsEarned: POINTS_INCORRECT
+      pointsEarned: totalAllocated * POINTS_INCORRECT_PER_CANDY
     };
   }
   
