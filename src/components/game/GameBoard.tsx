@@ -90,21 +90,23 @@ export default function GameBoard() {
     
     setIsSubmitting(true);
     
-    // Validate inventory
-    const validation = validateInventory(currentRound.initialCandies, allocations);
-    
-    if (!validation.valid) {
-      setFeedback({
-        show: true,
-        isCorrect: false,
-        message: `❌ ${validation.errors[0]}`
-      });
-      setIsSubmitting(false);
+    // Validate inventory (skip validation if time is up)
+    if (!isTimeUp) {
+      const validation = validateInventory(currentRound.initialCandies, allocations);
       
-      setTimeout(() => {
-        setFeedback({ show: false, isCorrect: false, message: '' });
-      }, 2000);
-      return;
+      if (!validation.valid) {
+        setFeedback({
+          show: true,
+          isCorrect: false,
+          message: `❌ ${validation.errors[0]}`
+        });
+        setIsSubmitting(false);
+        
+        setTimeout(() => {
+          setFeedback({ show: false, isCorrect: false, message: '' });
+        }, 2000);
+        return;
+      }
     }
     
     // Calculate score for this round
@@ -114,8 +116,8 @@ export default function GameBoard() {
     const percentage = getRoundPercentage(roundResult, currentRound.children);
     const isCorrect = percentage === 100;
     
-    const message = isTimeUp 
-      ? MESSAGES.TIME_UP 
+    const message = isTimeUp
+      ? MESSAGES.TIME_UP
       : getRoundFeedback(percentage);
 
     setFeedback({
