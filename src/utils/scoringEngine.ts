@@ -1,10 +1,12 @@
-import type { 
-  Child, 
-  AllocatedCandy, 
-  ChildResult, 
+import type {
+  Child,
+  AllocatedCandy,
+  ChildResult,
   RoundResult,
   ChildAllocation,
-  CandyRequest
+  CandyRequest,
+  CandyType,
+  DetailedScoreBreakdown
 } from '../types/game.types';
 
 /**
@@ -33,6 +35,86 @@ export const POINTS_HATE_PENALTY = -1;
 export const POINTS_NONE = 0;
 
 /**
+ * Helper: Get candy emoji from available candies list
+ */
+function getCandyEmoji(candyName: string, availableCandies: CandyType[]): string {
+  const candy = availableCandies.find(c => c.name === candyName);
+  return candy?.emoji || '🍬';
+}
+
+/**
+ * Helper: Calculate number of correctly allocated candies
+ * Excludes hated candies (they only get penalty, not positive points)
+ */
+function calculateCorrectCandies(
+  requests: CandyRequest[],
+  allocation: AllocatedCandy[],
+  hatedCandy?: string
+): number {
+  let correctCount = 0;
+  
+  for (const request of requests) {
+    // Skip if this is a hated candy - it gets penalty only, not positive points
+    if (hatedCandy && request.candyName === hatedCandy) {
+      continue;
+    }
+    
+    const allocated = allocation.find(a => a.candyName === request.candyName);
+    if (allocated) {
+      // Count the minimum of requested and allocated (matching portion)
+      correctCount += Math.min(request.quantity, allocated.quantity);
+    }
+  }
+  
+  return correctCount;
+}
+
+/**
+ * Helper: Calculate number of incorrectly allocated candies
+ * Excludes hated candies (they get their own penalty)
+ */
+function calculateIncorrectCandies(
+  allocation: AllocatedCandy[],
+  requests: CandyRequest[],
+  hatedCandy?: string
+): number {
+  let incorrectCount = 0;
+  
+  for (const alloc of allocation) {
+    // Skip hate candies - they get their own penalty, not incorrect points
+    if (hatedCandy && alloc.candyName === hatedCandy) {
+      continue;
+    }
+    
+    const request = requests.find(r => r.candyName === alloc.candyName);
+    if (request) {
+      // Excess beyond what was requested
+      if (alloc.quantity > request.quantity) {
+        incorrectCount += alloc.quantity - request.quantity;
+      }
+    } else {
+      // Completely wrong candy type
+      incorrectCount += alloc.quantity;
+    }
+  }
+  
+  return incorrectCount;
+}
+
+/**
+ * Helper: Get count of hated candies given
+ */
+function getHatedCandyCount(
+  allocation: AllocatedCandy[],
+  hatedCandy?: string
+): number {
+  if (!hatedCandy) return 0;
+  
+  const hatedAllocation = allocation.find(a => a.candyName === hatedCandy);
+  return hatedAllocation?.quantity || 0;
+}
+
+/**
  * Calculate points earned for allocating candies to a child
  *
  * Scoring rules:
@@ -43,11 +125,13 @@ export const POINTS_NONE = 0;
  *
  * @param child - The child receiving candy
  * @param allocation - What was allocated to this child
- * @returns Score breakdown with points earned
+ * @param availableCandies - Available candy types for emoji lookup
+ * @returns Score breakdown with points earned and detailed breakdown
  */
 export function calculateChildScore(
   child: Child,
-  allocation: AllocatedCandy[]
+  allocation: AllocatedCandy[],
+  availableCandies: CandyType[] = []
 ): ChildResult {
   const pointsPerCorrectCandy = child.isSpecial
     ? POINTS_SPECIAL_CHILD
@@ -61,6 +145,38 @@ export function calculateChildScore(
       hatePenalty = hatedAllocation.quantity * POINTS_HATE_PENALTY;
     }
   }
+  
+  // Calculate detailed breakdown
+  const correctCandiesCount = calculateCorrectCandies(child.requests, allocation, child.hatedCandy);
+  const incorrectCandiesCount = calculateIncorrectCandies(allocation, child.requests, child.hatedCandy);
+  const hatedCandiesCount = getHatedCandyCount(allocation, child.hatedCandy);
+  
+  const correctPoints = correctCandiesCount * pointsPerCorrectCandy;
+  const incorrectPoints = incorrectCandiesCount * POINTS_INCORRECT_PER_CANDY;
+  const hatePenaltyPoints = hatedCandiesCount * POINTS_HATE_PENALTY;
+  
+  // Build detailed breakdown
+  const breakdown: DetailedScoreBreakdown = {
+    requested: child.requests.map(req => ({
+      candyName: req.candyName,
+      quantity: req.quantity,
+      emoji: getCandyEmoji(req.candyName, availableCandies)
+    })),
+    allocated: allocation.map(alloc => ({
+      candyName: alloc.candyName,
+      quantity: alloc.quantity,
+      emoji: getCandyEmoji(alloc.candyName, availableCandies)
+    })),
+    correctCandies: correctCandiesCount,
+    incorrectCandies: incorrectCandiesCount,
+    hatedCandiesGiven: hatedCandiesCount,
+    correctPoints: correctPoints,
+    incorrectPoints: incorrectPoints,
+    hatePenaltyPoints: hatePenaltyPoints,
+    totalPoints: Math.max(0, correctPoints + incorrectPoints + hatePenaltyPoints),
+    isSpecial: child.isSpecial,
+    pointsPerCorrect: pointsPerCorrectCandy
+  };
   
   // Check if allocation exactly matches child's requests
   const isExactMatch = isAllocationExactMatch(child.requests, allocation);
@@ -76,7 +192,8 @@ export function calculateChildScore(
       isCorrect: true,
       isPartial: false,
       pointsEarned: totalCandies * pointsPerCorrectCandy,
-      hatePenalty: 0
+      hatePenalty: 0,
+      breakdown
     };
   }
   
@@ -92,7 +209,8 @@ export function calculateChildScore(
       isCorrect: false,
       isPartial: true,
       pointsEarned: Math.max(0, basePoints + hatePenalty),
-      hatePenalty: hatePenalty
+      hatePenalty: hatePenalty,
+      breakdown
     };
   }
   
@@ -101,18 +219,18 @@ export function calculateChildScore(
     allocation.some(a => a.quantity > 0);
   
   if (hasAllocation) {
-    // Incorrect allocation: partial credit per candy + hate penalty
-    const totalAllocated = allocation.reduce(
-      (sum, candy) => sum + candy.quantity,
-      0
-    );
-    const partialPoints = totalAllocated * POINTS_INCORRECT_PER_CANDY;
+    // Use the detailed breakdown calculation:
+    // - Full points for correct candies
+    // - Partial points (0.5) for incorrect candies
+    // - Penalty for hated candies
+    const totalPoints = correctPoints + incorrectPoints + hatePenaltyPoints;
     return {
       childId: child.id,
       isCorrect: false,
       isPartial: true,
-      pointsEarned: Math.max(0, partialPoints + hatePenalty),
-      hatePenalty: hatePenalty
+      pointsEarned: Math.max(0, totalPoints),
+      hatePenalty: hatePenalty,
+      breakdown
     };
   }
   
@@ -122,7 +240,8 @@ export function calculateChildScore(
     isCorrect: false,
     isPartial: false,
     pointsEarned: POINTS_NONE,
-    hatePenalty: 0
+    hatePenalty: 0,
+    breakdown
   };
 }
 
@@ -155,20 +274,23 @@ function isAllocationExactMatch(
 
 /**
  * Calculate total score for a round based on all child allocations
- * 
+ *
  * @param children - All children in the round
  * @param allocations - Allocations made by the player
+ * @param availableCandies - Available candy types for detailed breakdown
  * @returns Round result with total points and per-child breakdown
  */
 export function calculateRoundScore(
   children: Child[],
-  allocations: ChildAllocation[]
+  allocations: ChildAllocation[],
+  availableCandies: CandyType[] = []
 ): RoundResult {
   const childResults = children.map(child => {
     const allocation = allocations.find(a => a.childId === child.id);
     return calculateChildScore(
       child,
-      allocation?.allocatedCandies || []
+      allocation?.allocatedCandies || [],
+      availableCandies
     );
   });
   

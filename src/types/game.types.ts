@@ -29,12 +29,44 @@ export interface ChildAllocation {
   allocatedCandies: AllocatedCandy[];
 }
 
+export interface DetailedScoreBreakdown {
+  // What was requested
+  requested: {
+    candyName: string;
+    quantity: number;
+    emoji: string;
+  }[];
+  
+  // What was allocated
+  allocated: {
+    candyName: string;
+    quantity: number;
+    emoji: string;
+  }[];
+  
+  // Calculation details
+  correctCandies: number;        // Total correct candies matched
+  incorrectCandies: number;      // Total incorrect/wrong candies
+  hatedCandiesGiven: number;     // Count of hated candies given
+  
+  // Point breakdown
+  correctPoints: number;         // Points from correct candies
+  incorrectPoints: number;       // Points from incorrect candies
+  hatePenaltyPoints: number;     // Penalty from hated candies
+  totalPoints: number;           // Final total
+  
+  // Multiplier info
+  isSpecial: boolean;
+  pointsPerCorrect: number;      // 1 or 2 based on special status
+}
+
 export interface ChildResult {
   childId: string;
   isCorrect: boolean;
   isPartial: boolean;
   pointsEarned: number;
   hatePenalty?: number;
+  breakdown?: DetailedScoreBreakdown;  // Detailed calculation breakdown
 }
 
 export interface RoundResult {

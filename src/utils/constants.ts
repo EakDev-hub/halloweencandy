@@ -5,7 +5,7 @@ import type { CandyType } from '../types/game.types';
  * Kept for backward compatibility
  */
 export const GAME_CONFIG = {
-  TOTAL_ROUNDS: 20,
+  TOTAL_ROUNDS: 15,
   TIME_PER_ROUND: 40, // seconds
   POINTS_PER_CORRECT: 10,
   MIN_CHILDREN: 2,

@@ -5,7 +5,8 @@ import type {
   GameConfig,
   ChildAllocation,
   FeedbackState,
-  CandyType
+  CandyType,
+  RoundResult
 } from '../../types/game.types';
 import { loadGameConfig } from '../../utils/configLoader';
 import { calculateRoundScore, getRoundFeedback, getRoundPercentage } from '../../utils/scoringEngine';
@@ -37,6 +38,7 @@ export default function GameBoard() {
     isCorrect: false,
     message: ''
   });
+  const [currentRoundResult, setCurrentRoundResult] = useState<RoundResult | null>(null);
 
   const currentRound = rounds[currentRoundIndex];
 
@@ -85,6 +87,36 @@ export default function GameBoard() {
     });
   }, []);
 
+  // Handle closing feedback modal and moving to next round
+  const handleCloseFeedback = useCallback(() => {
+    console.log('🟢 GameBoard: Closing feedback modal', {
+      currentRoundIndex,
+      totalRounds: rounds.length
+    });
+    
+    setFeedback({ show: false, isCorrect: false, message: '' });
+    setIsSubmitting(false);
+
+    if (currentRoundIndex + 1 >= rounds.length) {
+      // Game over
+      console.log('🏁 GameBoard: Game Over');
+      const finalScore = score + (currentRoundResult?.pointsEarned || 0);
+      localStorage.setItem('finalScore', finalScore.toString());
+      localStorage.setItem('roundsCompleted', rounds.length.toString());
+      navigate('/game-over');
+    } else {
+      console.log('➡️ GameBoard: Moving to next round', {
+        from: currentRoundIndex,
+        to: currentRoundIndex + 1
+      });
+      setCurrentRoundIndex(prev => {
+        const next = prev + 1;
+        console.log('🔄 GameBoard: setCurrentRoundIndex', { prev, next });
+        return next;
+      });
+    }
+  }, [currentRoundIndex, rounds.length, score, currentRoundResult, navigate]);
+
   // Submit answer
   const handleSubmit = useCallback((isTimeUp = false) => {
     console.log('🟡 GameBoard: handleSubmit called', {
@@ -120,8 +152,12 @@ export default function GameBoard() {
       }
     }
     
-    // Calculate score for this round
-    const roundResult = calculateRoundScore(currentRound.children, allocations);
+    // Calculate score for this round with available candies for detailed breakdown
+    const roundResult = calculateRoundScore(
+      currentRound.children,
+      allocations,
+      currentRound.initialCandies
+    );
     roundResult.roundNumber = currentRound.roundNumber;
     
     const percentage = getRoundPercentage(roundResult, currentRound.children);
@@ -131,6 +167,7 @@ export default function GameBoard() {
       ? MESSAGES.TIME_UP
       : getRoundFeedback(percentage);
 
+    setCurrentRoundResult(roundResult);
     setFeedback({
       show: true,
       isCorrect,
@@ -139,37 +176,9 @@ export default function GameBoard() {
 
     // Update score
     setScore(prev => prev + roundResult.pointsEarned);
-
-    // Move to next round or end game
-    setTimeout(() => {
-      console.log('🟢 GameBoard: Timeout callback executing', {
-        currentRoundIndex,
-        totalRounds: rounds.length
-      });
-      
-      setFeedback({ show: false, isCorrect: false, message: '' });
-      setIsSubmitting(false);
-
-      if (currentRoundIndex + 1 >= rounds.length) {
-        // Game over
-        console.log('🏁 GameBoard: Game Over');
-        const finalScore = score + roundResult.pointsEarned;
-        localStorage.setItem('finalScore', finalScore.toString());
-        localStorage.setItem('roundsCompleted', rounds.length.toString());
-        navigate('/game-over');
-      } else {
-        console.log('➡️ GameBoard: Moving to next round', {
-          from: currentRoundIndex,
-          to: currentRoundIndex + 1
-        });
-        setCurrentRoundIndex(prev => {
-          const next = prev + 1;
-          console.log('🔄 GameBoard: setCurrentRoundIndex', { prev, next });
-          return next;
-        });
-      }
-    }, 2000);
-  }, [allocations, currentRound, currentRoundIndex, rounds.length, score, isSubmitting, feedback.show, navigate]);
+    
+    // No auto-close - user must click "Continue" button
+  }, [allocations, currentRound, currentRoundIndex, rounds.length, score, isSubmitting, feedback.show]);
   // Handle time up
   const handleTimeUp = useCallback(() => {
     console.log('⏰ GameBoard: handleTimeUp called', {
@@ -310,6 +319,7 @@ export default function GameBoard() {
           <p>💡 <strong>Tip:</strong> Give each child exactly what they request!</p>
           <p>👑 Special children earn <strong>2 points per candy</strong></p>
           <p>⚠️ Wrong amounts earn only <strong>0.5 points</strong></p>
+          <p>🚫 Hated candies give <strong>-1 point penalty each</strong></p>
         </div>
       </div>
 
@@ -318,6 +328,11 @@ export default function GameBoard() {
         <FeedbackModal
           isCorrect={feedback.isCorrect}
           message={feedback.message}
+          roundResult={currentRoundResult || undefined}
+          children={currentRound?.children}
+          availableCandies={currentRound?.initialCandies}
+          onClose={handleCloseFeedback}
+          isLastRound={currentRoundIndex + 1 >= rounds.length}
         />
       )}
     </div>
