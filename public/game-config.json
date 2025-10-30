@@ -1,13 +1,13 @@
 {
   "gameSettings": {
     "totalRounds": 15,
-    "timeLimitPerRound": 40,
+    "timeLimitPerRound": 60,
     "version": "2.1.0"
   },
   "rounds": [
     {
       "roundNumber": 1,
-      "timeLimit": 50,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Lollipop", "quantity": 3, "color": "#FF1493", "emoji": "🍭" },
         { "name": "Chocolate", "quantity": 5, "color": "#8B4513", "emoji": "🍫" }
@@ -36,7 +36,7 @@
     },
     {
       "roundNumber": 2,
-      "timeLimit": 48,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Gummy Bears", "quantity": 7, "color": "#FF6347", "emoji": "🐻" },
         { "name": "Candy Corn", "quantity": 5, "color": "#FFA500", "emoji": "🌽" },
@@ -76,7 +76,7 @@
     },
     {
       "roundNumber": 3,
-      "timeLimit": 45,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Lollipop", "quantity": 14, "color": "#FF1493", "emoji": "🍭" },
         { "name": "Chocolate", "quantity": 11, "color": "#8B4513", "emoji": "🍫" },
@@ -117,7 +117,7 @@
     },
     {
       "roundNumber": 4,
-      "timeLimit": 45,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Gummy Bears", "quantity": 16, "color": "#FF6347", "emoji": "🐻" },
         { "name": "Candy Corn", "quantity": 12, "color": "#FFA500", "emoji": "🌽" },
@@ -158,7 +158,7 @@
     },
     {
       "roundNumber": 5,
-      "timeLimit": 43,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Lollipop", "quantity": 14, "color": "#FF1493", "emoji": "🍭" },
         { "name": "Chocolate", "quantity": 11, "color": "#8B4513", "emoji": "🍫" },
@@ -199,7 +199,7 @@
     },
     {
       "roundNumber": 6,
-      "timeLimit": 40,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Gummy Bears", "quantity": 15, "color": "#FF6347", "emoji": "🐻" },
         { "name": "Candy Corn", "quantity": 12, "color": "#FFA500", "emoji": "🌽" },
@@ -251,7 +251,7 @@
     },
     {
       "roundNumber": 7,
-      "timeLimit": 40,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Chocolate", "quantity": 14, "color": "#8B4513", "emoji": "🍫" },
         { "name": "Lemon Drop", "quantity": 11, "color": "#FFFF00", "emoji": "🍋" },
@@ -302,7 +302,7 @@
     },
     {
       "roundNumber": 8,
-      "timeLimit": 38,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Gummy Bears", "quantity": 13, "color": "#FF6347", "emoji": "🐻" },
         { "name": "Candy Corn", "quantity": 10, "color": "#FFA500", "emoji": "🌽" },
@@ -353,7 +353,7 @@
     },
     {
       "roundNumber": 9,
-      "timeLimit": 38,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Lollipop", "quantity": 11, "color": "#FF1493", "emoji": "🍭" },
         { "name": "Chocolate", "quantity": 9, "color": "#8B4513", "emoji": "🍫" },
@@ -404,7 +404,7 @@
     },
     {
       "roundNumber": 10,
-      "timeLimit": 35,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Gummy Bears", "quantity": 12, "color": "#FF6347", "emoji": "🐻" },
         { "name": "Candy Corn", "quantity": 10, "color": "#FFA500", "emoji": "🌽" },
@@ -466,7 +466,7 @@
     },
     {
       "roundNumber": 11,
-      "timeLimit": 35,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Chocolate", "quantity": 11, "color": "#8B4513", "emoji": "🍫" },
         { "name": "Lemon Drop", "quantity": 9, "color": "#FFFF00", "emoji": "🍋" },
@@ -527,7 +527,7 @@
     },
     {
       "roundNumber": 12,
-      "timeLimit": 33,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Gummy Bears", "quantity": 10, "color": "#FF6347", "emoji": "🐻" },
         { "name": "Candy Corn", "quantity": 8, "color": "#FFA500", "emoji": "🌽" },
@@ -588,7 +588,7 @@
     },
     {
       "roundNumber": 13,
-      "timeLimit": 33,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Lollipop", "quantity": 9, "color": "#FF1493", "emoji": "🍭" },
         { "name": "Chocolate", "quantity": 8, "color": "#8B4513", "emoji": "🍫" },
@@ -644,7 +644,7 @@
     },
     {
       "roundNumber": 14,
-      "timeLimit": 30,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Gummy Bears", "quantity": 9, "color": "#FF6347", "emoji": "🐻" },
         { "name": "Candy Corn", "quantity": 7, "color": "#FFA500", "emoji": "🌽" },
@@ -701,7 +701,7 @@
     },
     {
       "roundNumber": 15,
-      "timeLimit": 30,
+      "timeLimit": 60,
       "initialCandies": [
         { "name": "Lollipop", "quantity": 8, "color": "#FF1493", "emoji": "🍭" },
         { "name": "Chocolate", "quantity": 7, "color": "#8B4513", "emoji": "🍫" },
