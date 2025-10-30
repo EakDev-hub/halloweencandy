@@ -3,6 +3,7 @@ import LandingPage from './components/screens/LandingPage';
 import NicknameEntry from './components/screens/NicknameEntry';
 import GameBoard from './components/game/GameBoard';
 import GameOverScreen from './components/screens/GameOverScreen';
+import LeaderboardScreen from './components/screens/LeaderboardScreen';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/nickname" element={<NicknameEntry />} />
         <Route path="/game" element={<GameBoard />} />
         <Route path="/game-over" element={<GameOverScreen />} />
+        <Route path="/leaderboard" element={<LeaderboardScreen />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

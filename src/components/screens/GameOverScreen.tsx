@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveGameSession, isSupabaseConfigured } from '../../lib/supabaseClient';
-import Leaderboard from '../game/Leaderboard';
 import { GAME_CONFIG } from '../../utils/constants';
+import HalloweenDecorations from '../decorations/HalloweenDecorations';
 
 export default function GameOverScreen() {
   const navigate = useNavigate();
@@ -11,22 +11,25 @@ export default function GameOverScreen() {
   const [roundsCompleted] = useState(() => parseInt(localStorage.getItem('roundsCompleted') || '0'));
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState(false);
-  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [countdown, setCountdown] = useState(3);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const hasSaved = useRef(false);
 
   const maxScore = GAME_CONFIG.TOTAL_ROUNDS * GAME_CONFIG.POINTS_PER_CORRECT;
   const percentage = Math.round((finalScore / maxScore) * 100);
 
+  // Save game session to database
   useEffect(() => {
     // Prevent duplicate saves
     if (hasSaved.current) {
       return;
     }
 
-    // Save game session to database
     const saveSession = async () => {
       if (!isSupabaseConfigured()) {
-        setShowLeaderboard(true);
+        // If no Supabase, skip saving and proceed to countdown
+        setSaveSuccess(true);
         return;
       }
 
@@ -40,34 +43,47 @@ export default function GameOverScreen() {
         GAME_CONFIG.TOTAL_ROUNDS
       );
 
+      setIsSaving(false);
+      
       if (result) {
-        setShowLeaderboard(true);
+        setSaveSuccess(true);
       } else {
         setSaveError(true);
         hasSaved.current = false; // Allow retry on error
       }
-      setIsSaving(false);
     };
 
     saveSession();
   }, [nickname, finalScore, roundsCompleted]);
 
-  const handlePlayAgain = () => {
-    localStorage.removeItem('finalScore');
-    localStorage.removeItem('roundsCompleted');
-    navigate('/nickname');
-  };
+  // Countdown and redirect after save completes
+  useEffect(() => {
+    if (!saveSuccess) return;
 
-  const handleBackHome = () => {
-    localStorage.removeItem('finalScore');
-    localStorage.removeItem('roundsCompleted');
-    localStorage.removeItem('playerNickname');
-    navigate('/');
-  };
+    // Start countdown after successful save
+    const countdownInterval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(countdownInterval);
+          setIsRedirecting(true);
+          // Redirect to leaderboard
+          setTimeout(() => {
+            navigate('/leaderboard');
+          }, 500);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(countdownInterval);
+  }, [saveSuccess, navigate]);
 
   return (
-    <div className="min-h-screen bg-halloween-gradient p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-halloween-gradient p-4 md:p-8 relative">
+      <HalloweenDecorations />
+      
+      <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
         <div className="card text-center mb-6">
           <h1 className="text-5xl md:text-6xl font-halloween text-halloween-orange mb-4 animate-pulse-slow">
@@ -127,32 +143,42 @@ export default function GameOverScreen() {
           </div>
         </div>
 
-        {/* Leaderboard */}
+        {/* Saving Status */}
         {isSaving && (
-          <div className="card text-center">
+          <div className="card text-center animate-pulse">
             <div className="text-4xl mb-2">⏳</div>
             <p className="text-gray-300">Saving your score...</p>
           </div>
         )}
 
+        {/* Save Error */}
         {saveError && (
           <div className="card text-center bg-red-900/20 border-red-500">
             <div className="text-4xl mb-2">⚠️</div>
-            <p className="text-red-300">Could not save your score. Check your connection.</p>
+            <p className="text-red-300 mb-2">Could not save your score. Check your connection.</p>
+            <p className="text-sm text-gray-400">You'll be redirected to the leaderboard anyway...</p>
           </div>
         )}
 
-        {showLeaderboard && <Leaderboard currentScore={finalScore} />}
+        {/* Countdown and Redirect */}
+        {saveSuccess && !isRedirecting && (
+          <div className="card text-center bg-green-900/20 border-green-500">
+            <div className="text-4xl mb-2">✅</div>
+            <p className="text-green-300 mb-2">Score saved successfully!</p>
+            <div className="text-6xl font-bold text-halloween-orange mb-2 animate-pulse">
+              {countdown}
+            </div>
+            <p className="text-gray-300">Redirecting to leaderboard...</p>
+          </div>
+        )}
 
-        {/* Action Buttons */}
-        <div className="flex flex-col md:flex-row gap-4 mt-6">
-          <button onClick={handlePlayAgain} className="btn-primary flex-1 text-xl py-4">
-            🎮 Play Again
-          </button>
-          <button onClick={handleBackHome} className="btn-secondary flex-1 text-xl py-4">
-            🏠 Back to Home
-          </button>
-        </div>
+        {/* Redirecting Message */}
+        {isRedirecting && (
+          <div className="card text-center">
+            <div className="text-4xl mb-2 animate-spin">🎃</div>
+            <p className="text-gray-300">Loading leaderboard...</p>
+          </div>
+        )}
       </div>
     </div>
   );
