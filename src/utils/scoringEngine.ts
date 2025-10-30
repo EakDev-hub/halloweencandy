@@ -268,7 +268,7 @@ function isAllocationExactMatch(
   // Every request must be matched exactly
   return requests.every(request => {
     const allocated = allocation.find(a => a.candyName === request.candyName);
-    return allocated && allocated.quantity === request.quantity;
+    return allocated && allocated.quantity >= request.quantity;
   });
 }
 
