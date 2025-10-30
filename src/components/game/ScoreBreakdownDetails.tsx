@@ -120,7 +120,7 @@ export default function ScoreBreakdownDetails({ child, breakdown }: ScoreBreakdo
                     <span>Hate penalty: {breakdown.hatedCandiesGiven} × -1</span>
                   </span>
                   <span className="text-red-400 font-bold">
-                    {breakdown.hatedCandiesGiven * -1} pts
+                    {breakdown.hatePenaltyPoints} pts
                   </span>
                 </div>
               )}

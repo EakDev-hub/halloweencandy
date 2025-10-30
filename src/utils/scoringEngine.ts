@@ -173,7 +173,7 @@ export function calculateChildScore(
     correctPoints: correctPoints,
     incorrectPoints: incorrectPoints,
     hatePenaltyPoints: hatePenaltyPoints,
-    totalPoints: Math.max(0, correctPoints + incorrectPoints + hatePenaltyPoints),
+    totalPoints: correctPoints + incorrectPoints + hatePenaltyPoints,
     isSpecial: child.isSpecial,
     pointsPerCorrect: pointsPerCorrectCandy
   };
@@ -208,7 +208,7 @@ export function calculateChildScore(
       childId: child.id,
       isCorrect: false,
       isPartial: true,
-      pointsEarned: Math.max(0, basePoints + hatePenalty),
+      pointsEarned: basePoints + hatePenalty,
       hatePenalty: hatePenalty,
       breakdown
     };
@@ -228,7 +228,7 @@ export function calculateChildScore(
       childId: child.id,
       isCorrect: false,
       isPartial: true,
-      pointsEarned: Math.max(0, totalPoints),
+      pointsEarned: totalPoints,
       hatePenalty: hatePenalty,
       breakdown
     };

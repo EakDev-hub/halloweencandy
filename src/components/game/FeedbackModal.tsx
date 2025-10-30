@@ -47,7 +47,7 @@ export default function FeedbackModal({
         {roundResult && (
           <div className="mb-6">
             <div className="text-4xl font-bold text-halloween-orange mb-2">
-              +{roundResult.pointsEarned} points
+              {roundResult.pointsEarned} points
             </div>
             {hasHatePenalties && (
               <div className="text-sm text-red-400 flex items-center justify-center gap-2">
@@ -61,10 +61,7 @@ export default function FeedbackModal({
         {/* Detailed Results */}
         {roundResult && children && availableCandies && (
           <div className="bg-halloween-black/40 rounded-lg p-4 mb-4 text-left">
-            <h3 className="text-lg font-bold text-halloween-orange mb-3 text-center">
-              Results Breakdown
-            </h3>
-            
+           
             <div className="space-y-2">
               {roundResult.childResults.map((result) => {
                 const child = children.find(c => c.id === result.childId);
@@ -131,29 +128,7 @@ export default function FeedbackModal({
               })}
             </div>
 
-            {/* Summary Stats */}
-            <div className="mt-4 pt-3 border-t border-halloween-orange/30">
-              <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                <div>
-                  <div className="text-green-400 font-bold text-lg">
-                    {roundResult.childResults.filter(r => r.isCorrect).length}
-                  </div>
-                  <div className="text-gray-400">Perfect ✅</div>
-                </div>
-                <div>
-                  <div className="text-yellow-400 font-bold text-lg">
-                    {roundResult.childResults.filter(r => r.isPartial).length}
-                  </div>
-                  <div className="text-gray-400">Partial ⚠️</div>
-                </div>
-                <div>
-                  <div className="text-gray-400 font-bold text-lg">
-                    {roundResult.childResults.filter(r => !r.isCorrect && !r.isPartial).length}
-                  </div>
-                  <div className="text-gray-400">Missed ❌</div>
-                </div>
-              </div>
-            </div>
+         
 
             {/* Hate Candy Warning */}
             {hasHatePenalties && (
