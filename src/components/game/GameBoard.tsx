@@ -39,6 +39,7 @@ export default function GameBoard() {
     message: ''
   });
   const [currentRoundResult, setCurrentRoundResult] = useState<RoundResult | null>(null);
+  const [showTimeUpToast, setShowTimeUpToast] = useState(false);
 
   const currentRound = rounds[currentRoundIndex];
 
@@ -179,19 +180,51 @@ export default function GameBoard() {
     
     // No auto-close - user must click "Continue" button
   }, [allocations, currentRound, currentRoundIndex, rounds.length, score, isSubmitting, feedback.show]);
-  // Handle time up
+  // Handle time up - auto-advance with 0 points
   const handleTimeUp = useCallback(() => {
     console.log('⏰ GameBoard: handleTimeUp called', {
       isSubmitting,
       feedbackShow: feedback.show
     });
     
-    if (!isSubmitting && !feedback.show) {
-      handleSubmit(true);
-    } else {
+    if (isSubmitting || feedback.show) {
       console.log('⚠️ GameBoard: handleTimeUp blocked');
+      return;
     }
-  }, [isSubmitting, feedback.show, handleSubmit]);
+    
+    // Pause timer during transition
+    setIsSubmitting(true);
+    
+    // Show toast notification
+    setShowTimeUpToast(true);
+    
+    // Hide toast after 1.5 seconds and advance to next round
+    setTimeout(() => {
+      setShowTimeUpToast(false);
+      
+      // Award 0 points (no score update)
+      console.log('⏰ GameBoard: Time expired - 0 points awarded');
+      
+      if (currentRoundIndex + 1 >= rounds.length) {
+        // Game over - last round
+        console.log('🏁 GameBoard: Game Over (Time Up on Last Round)');
+        localStorage.setItem('finalScore', score.toString());
+        localStorage.setItem('roundsCompleted', rounds.length.toString());
+        navigate('/game-over');
+      } else {
+        // Move to next round first to trigger timer reset
+        console.log('➡️ GameBoard: Auto-advancing to next round', {
+          from: currentRoundIndex,
+          to: currentRoundIndex + 1
+        });
+        setCurrentRoundIndex(prev => prev + 1);
+        // Unpause after a brief delay to ensure round change and timer reset completes
+        setTimeout(() => {
+          setIsSubmitting(false);
+        }, 50);
+      }
+    }, 1500);
+  }, [isSubmitting, feedback.show, currentRoundIndex, rounds.length, score, navigate]);
 
 
   // Redirect if no nickname
@@ -255,6 +288,7 @@ export default function GameBoard() {
             </p>
           </div>
           <Timer
+            key={`round-${currentRoundIndex}`}
             timeRemaining={currentRound.timeLimit}
             totalTime={currentRound.timeLimit}
             onTimeUp={handleTimeUp}
@@ -334,6 +368,17 @@ export default function GameBoard() {
           onClose={handleCloseFeedback}
           isLastRound={currentRoundIndex + 1 >= rounds.length}
         />
+      )}
+
+      {/* Time Up Toast Notification */}
+      {showTimeUpToast && (
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
+          <div className="bg-red-600 text-white px-8 py-6 rounded-lg shadow-2xl border-4 border-red-400 animate-pulse">
+            <div className="text-6xl mb-2 text-center">⏰</div>
+            <p className="text-2xl font-bold text-center">Time's Up!</p>
+            <p className="text-lg text-center mt-2">Moving to next question...</p>
+          </div>
+        </div>
       )}
     </div>
   );
